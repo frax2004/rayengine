@@ -1,0 +1,102 @@
+@startuml arch
+
+!theme blueprint
+
+package "rayengine" {
+  
+  class "Resource" as Resource
+
+  class "Font" as Font extends Resource {
+    - font: rl.Font
+    + Font(path: string)
+    + unwrap(): rl.Font
+  }
+  class "Model" as Model extends Resource {
+    - model: rl.Model
+    + Model(path: string)
+    + unwrap(): rl.Model
+  }
+
+  class "Scene" as Scene {
+    - camera: GameObject
+    - gameObjects: map<string, GameObject>
+    + add(id: string, gameObject: GameObject): void
+    + remove(id: string): void
+    + getCamera(): GameObject
+    + setCamera(camera: GameObject): void
+  }
+
+  class "GameObject" as GameObject extends Updatable, Renderable {
+    - components: multimap<Type, Component>
+    - parent: Scene
+    + GameObject(parent: Scene)
+    + getParent(): Scene
+    + add(component: Component): void
+    + get<T>(): T
+    + update(): void
+    + render(): void
+  }
+
+  class "Component" as Component {
+    - parent: GameObject
+    + Component(parent: GameObject)
+    + getParent(): GameObject
+  }
+
+  class "Transform" as Transform extends Component {
+    - position: Vector3
+    - rotation: Vector3
+    - scale: Vector3
+    + Transform(parent: GameObject)
+    + getPosition(): Vector3
+    + setPosition(position: Vector3): void
+    + getRotation(): Vector3
+    + setRotation(rotation: Vector3): void
+    + getScale(): Vector3
+    + setScale(scale: Vector3): void
+  }
+
+  class "Renderer3D" as Renderer3D extends Component, Renderable {
+    - model: Model
+    + Renderer3D(parent: GameObject)
+    + Renderer3D(parent: GameObject, model: Model)
+    + getModel(): rl.Model
+    + setModel(): rl.Model
+    + render(): void
+  }
+
+  class "Script" as Script extends Component, Updatable {
+    + start(): void
+    + update(): void
+  }
+
+  class "Camera3D" as Camera3D extends Component, Updatable {
+    + update(): void
+  }
+
+  class "SceneBuilder" as SceneBuilder {
+    - gameObjects: map<string, GameObject>
+    + camera: GameObject
+    + setCamera(camera: GameObject)
+    + add(id: string, gameObject: GameObject): SceneBuilder
+    + build(): Scene
+  }
+
+  class "SceneManager" as Game {
+    - scenes: map<string, Scene>
+    - currentScene: Scene
+    + add(id: string, scene: Scene)
+    + getCurrentScene(): Scene
+    + setCurrentScene(scene: Scene)
+  }
+  
+  class "Updatable" as Updatable {
+    + update(): void
+  }
+
+  class "Renderable" as Renderable {
+    + render(): void
+  }
+}
+
+@enduml
