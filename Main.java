@@ -6,7 +6,6 @@ import rayengine.Font;
 import rayengine.GameObject;
 import rayengine.Music;
 import rayengine.MusicPlayer;
-import rayengine.Rectangle;
 import rayengine.ResourceManager;
 import rayengine.Scene;
 import rayengine.SceneBuilder;
@@ -15,6 +14,7 @@ import rayengine.Vector2;
 
 
 interface Main {
+
   static void main(String[] args) {
     Raylib.InitAudioDevice();
     Raylib.SetConfigFlags(Raylib.FLAG_WINDOW_RESIZABLE);
@@ -22,26 +22,34 @@ interface Main {
     Raylib.SetTargetFPS(60);
 
     ResourceManager resourceManager = new ResourceManager();
-    Music mainMenuMusic = resourceManager.add("mainMenuMusic", new Music("assets/music/main menu.mp3"));
+    Music mainMenuMusic = resourceManager.add("mainMenuMusic", new Music("assets/music/interstellar.mp3"));
     Texture titleScreen = resourceManager.add("titleScreen", new Texture("assets/textures/titlescreen.png"));
-    Texture parallax = resourceManager.add("parallax", new Texture("assets/textures/parallax.png"));
+    // Texture parallax = resourceManager.add("parallax", new Texture("assets/textures/parallax.png"));
     Texture buttonTexture = resourceManager.add("button", new Texture("assets/textures/button.png"));
     Font arial = resourceManager.add("arial", new Font("C:/Windows/Fonts/arial.ttf"));
+    Texture parallax = resourceManager.add("parallax", new Texture("assets/textures/background.png"));
 
     SceneBuilder sceneBuilder = new SceneBuilder()
     .setTag("Main Menu");
 
-    float[] factors = {-.75f, 1, -1.5f};
-    for(int i = 0; i < 3; ++i) {
-      GameObject o = new GameObject();
-      Canvas canv = o.attach(new Canvas(o)).get();
-      canv.setTexture(parallax);
-      canv.setScissorRect(new Rectangle(0, i*.333f, 1, .333f));
-      o.attach(new Animate(o, factors[i]));
-      sceneBuilder.add("Parallax" + (i+1), o);
-    }
+    // float[] factors = {-.75f, 1, -1.5f};
+    // for(int i = 0; i < 3; ++i) {
+    //   GameObject o = new GameObject();
+    //   Canvas canv = o.attach(new Canvas(o)).get();
+    //   canv.setTexture(parallax);
+    //   canv.setScissorRect(new Rectangle(0, i*.333f, 1, .333f));
+    //   o.attach(new Animate(o, factors[i]));
+    //   sceneBuilder.add("Parallax" + (i+1), o);
+    // }
 
+    GameObject bg = new GameObject();
+    Canvas canv = bg.attach(new Canvas(bg)).get();
+    canv.setTexture(parallax);
+    canv.setSourceSize(new Vector2(.25f, .25f));
+    bg.attach(new Animate(bg, 15, 0));
+    sceneBuilder.add("Parallax", bg);
     
+
     GameObject obj1 = new GameObject();
     Canvas canvas = obj1.attach(new Canvas(obj1)).get();
     canvas.setTexture(titleScreen);

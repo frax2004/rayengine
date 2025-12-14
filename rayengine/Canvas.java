@@ -11,6 +11,7 @@ public final class Canvas extends Component implements Renderable {
   private Vector2 dstSize = Vector2.ONE.copy(); // [0, 1]
   private Optional<Texture> texture = null;
   private Rectangle scissor = null;
+  private float rotation = 0;
 
   public Canvas(GameObject parent) {
     super(parent);
@@ -44,7 +45,15 @@ public final class Canvas extends Component implements Renderable {
       size.y
     );
   }
-  
+
+  public float getRotation() {
+    return this.rotation;
+  }
+
+  public void setRotation(float rotation) {
+    this.rotation = rotation;
+  }
+
   public void setSourcePosition(Vector2 position) {
     this.srcPosition = new Vector2(
       position.x,
@@ -128,7 +137,7 @@ public final class Canvas extends Component implements Renderable {
         source,
         dest,
         Vector2.ZERO.unwrap(),
-        0,
+        this.rotation,
         Raylib.ColorFromHSV(0, 0, 1)
       )
     );
