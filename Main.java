@@ -1,5 +1,17 @@
-import rayengine.*;
+
 import com.raylib.Raylib;
+
+import rayengine.Canvas;
+import rayengine.Font;
+import rayengine.GameObject;
+import rayengine.Music;
+import rayengine.MusicPlayer;
+import rayengine.Rectangle;
+import rayengine.ResourceManager;
+import rayengine.Scene;
+import rayengine.SceneBuilder;
+import rayengine.Texture;
+import rayengine.Vector2;
 
 
 interface Main {
