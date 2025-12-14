@@ -3,7 +3,7 @@ package rayengine;
 public final class Transform extends Component {
   private Vector3 position = Vector3.ZERO.copy();
   private Vector3 rotation = Vector3.ZERO.copy();
-  private Vector3 scale = Vector3.ZERO.copy();
+  private Vector3 scale = Vector3.ONE.copy();
 
 
   public Transform(GameObject parent, Vector3 position, Vector3 rotation, Vector3 scale) {

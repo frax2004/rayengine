@@ -1,13 +1,13 @@
 package rayengine;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 
 public final class Scene implements Updatable, Renderable {
   private String tag = "";
   private GameObject camera = null;
-  private Map<String, GameObject> gameObjects = new HashMap<>();
+  private Map<String, GameObject> gameObjects = new TreeMap<>();
 
   public Scene() {}
   

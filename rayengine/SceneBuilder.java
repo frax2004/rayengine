@@ -1,11 +1,11 @@
 package rayengine;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public final class SceneBuilder {
   private String tag = "";
-  private Map<String, GameObject> gameObjects = new HashMap<>();
+  private Map<String, GameObject> gameObjects = new TreeMap<>();
 
   public SceneBuilder() {}
 

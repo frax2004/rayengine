@@ -59,4 +59,8 @@ public final class Vector2 {
     vec.x(this.x).y(this.y);
     return vec;
   }
+  @Override
+  public String toString() {
+    return "[%s, %s]".formatted(this.x, this.y);
+  }
 }
