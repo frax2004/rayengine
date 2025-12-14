@@ -24,46 +24,38 @@ interface Main {
     ResourceManager resourceManager = new ResourceManager();
     Music mainMenuMusic = resourceManager.add("mainMenuMusic", new Music("assets/music/interstellar.mp3"));
     Texture titleScreen = resourceManager.add("titleScreen", new Texture("assets/textures/titlescreen.png"));
-    // Texture parallax = resourceManager.add("parallax", new Texture("assets/textures/parallax.png"));
     Texture buttonTexture = resourceManager.add("button", new Texture("assets/textures/button.png"));
     Font arial = resourceManager.add("arial", new Font("C:/Windows/Fonts/arial.ttf"));
     Texture parallax = resourceManager.add("parallax", new Texture("assets/textures/background.png"));
-
-    SceneBuilder sceneBuilder = new SceneBuilder()
-    .setTag("Main Menu");
-
-    // float[] factors = {-.75f, 1, -1.5f};
-    // for(int i = 0; i < 3; ++i) {
-    //   GameObject o = new GameObject();
-    //   Canvas canv = o.attach(new Canvas(o)).get();
-    //   canv.setTexture(parallax);
-    //   canv.setScissorRect(new Rectangle(0, i*.333f, 1, .333f));
-    //   o.attach(new Animate(o, factors[i]));
-    //   sceneBuilder.add("Parallax" + (i+1), o);
-    // }
+    Texture stars = resourceManager.add("parallax", new Texture("assets/textures/stars.png"));
 
     GameObject bg = new GameObject();
     Canvas canv = bg.attach(new Canvas(bg)).get();
     canv.setTexture(parallax);
     canv.setSourceSize(new Vector2(.25f, .25f));
-    bg.attach(new Animate(bg, 15, 0));
-    sceneBuilder.add("Parallax", bg);
+    bg.attach(new Animate(bg, 7.5f, 0));
+    Canvas canv2 = bg.attach(new Canvas(bg)).get();
+    canv2.setTexture(stars);
+    canv2.setSourceSize(new Vector2(.25f, .25f));
     
-
-    GameObject obj1 = new GameObject();
-    Canvas canvas = obj1.attach(new Canvas(obj1)).get();
+    
+    GameObject title = new GameObject();
+    Canvas canvas = title.attach(new Canvas(title)).get();
     canvas.setTexture(titleScreen);
     canvas.setDestinationPosition(new Vector2(.2f, 0.f));
     canvas.setDestinationSize(new Vector2(.6f, .55f));
-    MusicPlayer musicPlayer = obj1.attach(new MusicPlayer(obj1, mainMenuMusic)).get();
+    MusicPlayer musicPlayer = title.attach(new MusicPlayer(title, mainMenuMusic)).get();
     musicPlayer.play();
-
-    Scene scene = sceneBuilder
-    .add("Title", obj1)
+    
+    Scene scene = new SceneBuilder()
+    .setTag("Main Menu")
+    .add("Parallax", bg)
+    .add("Title", title)
     .build();
 
-    while(! Raylib.WindowShouldClose()) {
-
+    
+    
+    while(!Raylib.WindowShouldClose()) {
       scene.update();
 
       Raylib.BeginDrawing();
@@ -71,7 +63,6 @@ interface Main {
       scene.render();
 
       Raylib.EndDrawing();
-
     }
 
     resourceManager.releaseAll();
