@@ -50,9 +50,9 @@ interface Main {
     MusicPlayer musicPlayer = obj1.attach(new MusicPlayer(obj1, mainMenuMusic)).get();
     musicPlayer.play();
 
-    sceneBuilder.add("Title", obj1);
-    
-    Scene scene = sceneBuilder.build();
+    Scene scene = sceneBuilder
+    .add("Title", obj1)
+    .build();
 
     while(! Raylib.WindowShouldClose()) {
 
