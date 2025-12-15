@@ -52,8 +52,6 @@ interface Main {
     .add("Parallax", bg)
     .add("Title", title)
     .build();
-
-    
     
     while(!Raylib.WindowShouldClose()) {
       scene.update();
