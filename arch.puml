@@ -97,6 +97,67 @@ package "rayengine" {
   class "Renderable" as Renderable {
     + render(): void
   }
+
+
+  package "UI" {
+
+    interface Event {}
+
+    interface EventListener {
+      + listen(event: Event): void
+    }
+
+    interface Widget extends rayengine.Renderable {
+      + getParent(): Optional<Widget>
+      + getSize(): Vector2
+      + getPosition(): Vector2
+      + setSize(size: Vector2): void
+      + setPosition(position: Vector2): void
+    }
+
+    abstract class StatelessWidget implements Widget {
+      - parent: Widget
+      - position: Vector2
+      - size: Vector2
+      ---
+      + StatelessWidget(parent: Widget)
+    }
+
+    abstract class StatefulWidget implements Widget, rayengine.Updatable {
+      - parent: Widget
+      - position: Vector2
+      - size: Vector2
+      - listeners: Map<Class<? extends EventListener>, EventListener>
+      ---
+      StatefulWidget(parent: Widget)
+      ---
+      + addEventListener(listener: EventListener): void
+      + removeEventListener(listener: EventListener): void
+      + update(): void
+    }
+
+    abstract class Layout extends StatefulWidget {
+      - children: List<Widget>
+      ---
+      + Layout(parent: Widget)
+      + Layout(parent: Widget, widgets: List<Widget>)
+      ---
+      + add(widget: Widget): void
+      + remove(widget: Widget): void
+      + getChild(index: int): Optional<Widget>
+      + getChildCount(): int
+      + iterator(): Iterator<Widget>
+    }
+
+    class Panel extends Widget {
+      - color: Color
+      ---
+      + Panel(parent: Widget)
+      ---
+      + getColor(): Color
+      + setColor(color: Color): void
+    }
+  }
 }
 
 @enduml
