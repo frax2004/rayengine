@@ -4,7 +4,8 @@ public interface RandomManager {
   /// 13 => venerdi 13
   /// 67 => six-seven
   /// 89 => il capobranco dei suoi paguri
-  static final int[] PRIMES = new int[] { 1, 13, 67, 89 };
+  /// 101 => la caricano in 101
+  static final int[] PRIMES = new int[] { 1, 13, 67, 89, 101 };
 
   static int convolution(int[] lhs, int[] rhs) {
     assert lhs.length == rhs.length;
@@ -15,17 +16,21 @@ public interface RandomManager {
   }
 
   static int getMappedLevel(int seed, int levelIndex) {
-    return convolution(PRIMES, new int[] {seed, levelIndex, 0, 0 }) % Levels.getPossibleLevels().length;
+    return convolution(PRIMES, new int[] {seed, levelIndex, 0, 0, 0 }) % Levels.getPossibleLevels().length;
   }
 
   static int getMappedScenario(int seed, int levelIndex, int scenarioIndex) {
-    return convolution(PRIMES, new int[] {seed, levelIndex, scenarioIndex, 0 }) % Scenarioes.getPossibleScenarios().length;
+    return convolution(PRIMES, new int[] {seed, levelIndex, scenarioIndex, 0, 0 }) % Scenarioes.getPossibleScenarios().length;
   }
 
   static int getMappedEvent(int seed, int levelIndex, int scenarioIndex, int eventIndex) {
-    return convolution(PRIMES, new int[] {seed, levelIndex, scenarioIndex, eventIndex }) % Events.getPossibleEvents().length;
+    return convolution(PRIMES, new int[] {seed, levelIndex, scenarioIndex, eventIndex, 0 }) % Events.getPossibleEvents().length;
   }
-
+  
+  static int getMappedReward(int seed, int levelIndex, int scenarioIndex, int eventIndex, int playerIndex, int rewardLength) {
+    return convolution(PRIMES, new int[] {seed, levelIndex, scenarioIndex, eventIndex, playerIndex }) % rewardLength;
+  }
+  
 }
 
 
