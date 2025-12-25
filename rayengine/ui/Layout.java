@@ -1,17 +1,71 @@
 package rayengine.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import com.raylib.Raylib;
+
+import rayengine.Rectangle;
+import rayengine.Vector2;
 
 public abstract class Layout extends StatefullWidget {
   private List<Widget> children = new ArrayList<>();
+  private float[] margins = new float[4];
 
   public Layout(Widget parent) {
     super(parent);
+  }
+
+  @Override
+  public Vector2 getPosition() {
+    Vector2 position = super.getPosition();
+    Vector2 size = super.getSize();
+    return new Vector2(
+      position.x + 0.5f*size.x*margins[Margin.EAST.ordinal()], 
+      position.y + 0.5f*size.y*margins[Margin.NORTH.ordinal()]
+    );
+  }
+
+  @Override 
+  public Vector2 getSize() {
+    Vector2 size = super.getSize();
+    return new Vector2(
+      size.x*(1.f - 0.5f*(margins[Margin.EAST.ordinal()] + margins[Margin.WEST.ordinal()])),
+      size.y*(1.f - 0.5f*(margins[Margin.NORTH.ordinal()] + margins[Margin.SOUTH.ordinal()]))
+    );
+  }
+
+  public float[] getMargins() {
+    return Arrays.copyOf(this.margins, this.margins.length);
+  }
+
+  public float getMargin(Margin margin) {
+    return this.margins[margin.ordinal()];
+  }
+
+  public void setHorizontalMargin(float value) {
+    this.margins[Margin.EAST.ordinal()] = value;
+    this.margins[Margin.WEST.ordinal()] = value;
+  }
+  
+  public void setVerticalMargin(float value) {
+    this.margins[Margin.NORTH.ordinal()] = value;
+    this.margins[Margin.SOUTH.ordinal()] = value;
+  }
+
+  public void setMargins(float north, float south, float east, float west) {
+    this.margins[Margin.NORTH.ordinal()] = Math.clamp(north, 0, 1);
+    this.margins[Margin.SOUTH.ordinal()] = Math.clamp(south, 0, 1);
+    this.margins[Margin.EAST.ordinal()] = Math.clamp(east, 0, 1);
+    this.margins[Margin.WEST.ordinal()] = Math.clamp(west, 0, 1);
+  }
+
+  public void setMargin(Margin margin, float value) {
+    this.margins[margin.ordinal()] = Math.clamp(value, 0, 1);
   }
 
   public Iterator<Widget> iterator() {

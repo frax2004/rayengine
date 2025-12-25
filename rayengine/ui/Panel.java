@@ -4,7 +4,7 @@ import com.raylib.Raylib;
 
 import rayengine.Vector2;
 
-public class Panel extends StatelessWidget {
+public final class Panel extends StatelessWidget {
   private Raylib.Color color;
 
   public Panel(Widget parent, Raylib.Color color) {
