@@ -27,6 +27,12 @@ interface Main {
     return layout;
   }
 
+  private static GameObject buildBg() {
+    GameObject bg = new GameObject();
+    bg.attach(new UI(bg, Main.buildUI()));
+    return bg;
+  }
+
   static void main(String[] args) {
     Raylib.InitAudioDevice();
     Raylib.SetConfigFlags(Raylib.FLAG_WINDOW_RESIZABLE);
@@ -41,8 +47,6 @@ interface Main {
     Texture parallax = resourceManager.add("parallax", new Texture("assets/textures/background.png"));
     Texture stars = resourceManager.add("parallax", new Texture("assets/textures/stars.png"));
 
-    GameObject bg = new GameObject();
-    bg.attach(new UI(bg, Main.buildUI()));
     // Canvas canv = bg.attach(new Canvas(bg)).get();
     // canv.setTexture(parallax);
     // canv.setSourceSize(new Vector2(.25f, .25f));
@@ -51,7 +55,8 @@ interface Main {
     // canv2.setTexture(stars);
     // canv2.setSourceSize(new Vector2(.25f, .25f));
     
-    
+    GameObject bg = buildBg();
+
     GameObject title = new GameObject();
     // Canvas canvas = title.attach(new Canvas(title)).get();
     // canvas.setTexture(titleScreen);
