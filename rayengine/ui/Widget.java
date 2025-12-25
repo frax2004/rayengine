@@ -3,10 +3,9 @@ package rayengine.ui;
 import java.util.Optional;
 
 import rayengine.Renderable;
-import rayengine.Updatable;
 import rayengine.Vector2;
 
-public abstract class Widget implements Updatable, Renderable {
+public abstract class Widget implements Renderable {
   private Widget parent = null;
   private Vector2 position = Vector2.ZERO.copy();
   private Vector2 size = Vector2.ZERO.copy();
