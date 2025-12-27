@@ -1,6 +1,6 @@
 package rayengine;
 
-import java.util.Optional;
+
 import com.raylib.Raylib;
 
 public final class Camera extends Component implements Updatable {
@@ -17,41 +17,28 @@ public final class Camera extends Component implements Updatable {
     Raylib.UpdateCamera(this.camera, this.cameraMode);
   }
   
-  public Optional<Raylib.Camera3D> unwrap() {
-    return Optional.ofNullable(this.camera);
+  public Raylib.Camera3D unwrap() {
+    return this.camera;
   }
   
   public Vector3 getPosition() {
-    return unwrap()
-    .map(Raylib.Camera3D::_position)
-    .map(Vector3::new)
-    .orElse(Vector3.ZERO);
+    return this.camera != null ? new Vector3(this.camera._position()) : Vector3.ZERO.copy();
   }
   
   public Vector3 getTarget() {
-    return unwrap()
-    .map(Raylib.Camera3D::target)
-    .map(Vector3::new)
-    .orElse(Vector3.ZERO);
+    return this.camera != null ? new Vector3(this.camera.target()) : Vector3.ZERO.copy();
   }
   
   public Vector3 getUp() {
-    return unwrap()
-    .map(Raylib.Camera3D::up)
-    .map(Vector3::new)
-    .orElse(Vector3.ZERO);
+    return this.camera != null ? new Vector3(this.camera.up()) : Vector3.ZERO.copy();
   }
   
   public float getFovy() {
-    return unwrap()
-    .map(Raylib.Camera3D::fovy)
-    .orElse(0.f);
+    return this.camera != null ? this.camera.fovy() : 0;
   }
   
   public int getProjection() {
-    return unwrap()
-    .map(Raylib.Camera3D::projection)
-    .orElse(0);
+    return this.camera != null ? this.camera.projection() : Raylib.CAMERA_PERSPECTIVE;
   }
   
   public int getMode() {

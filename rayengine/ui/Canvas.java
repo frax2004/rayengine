@@ -11,18 +11,18 @@ import rayengine.Vector2;
 public final class Canvas extends StatelessWidget {
   private Vector2 srcPosition = Vector2.ZERO.copy(); // [0, 1]
   private Vector2 srcSize = Vector2.ONE.copy(); // [0, 1]
-  private Optional<Texture> texture = null;
+  private Texture texture = null;
   private Rectangle scissor = null;
   private float rotation = 0;
 
   public Canvas(Widget parent) {
     super(parent);
-    this.texture = Optional.empty();
+    this.texture = null;
   }
 
   public Canvas(Widget parent, Texture texture) {
     super(parent);
-    this.texture = Optional.ofNullable(texture);
+    this.texture = texture;
   }
   
   public Optional<Rectangle> getScissorRect() {
@@ -39,7 +39,7 @@ public final class Canvas extends StatelessWidget {
   }
 
   public void setTexture(Texture texture) {
-    this.texture = Optional.ofNullable(texture);
+    this.texture = texture;
   }
   
   public void setSourceSize(Vector2 size) {
@@ -58,7 +58,7 @@ public final class Canvas extends StatelessWidget {
     this.srcPosition = position.copy();
   }
 
-  public Optional<Texture> getTexture() {
+  public Texture getTexture() {
     return this.texture;
   }
 
@@ -106,19 +106,16 @@ public final class Canvas extends StatelessWidget {
         (int)(Raylib.GetRenderHeight()*scissor.height)
       );
 
-
-    this.texture
-    .flatMap(Texture::unwrap)
-    .ifPresent((t) ->
+    if(this.texture != null) {
       Raylib.DrawTexturePro(
-        t,
+        this.texture.unwrap(),
         source.unwrap(),
         dest.unwrap(),
         Vector2.ZERO.unwrap(),
         this.rotation,
         Raylib.GetColor(0xffffffff)
-      )
-    );
+      );
+    }
 
     if(this.scissor != null)
       Raylib.EndScissorMode();

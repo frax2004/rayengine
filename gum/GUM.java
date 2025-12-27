@@ -98,7 +98,7 @@ public class GUM {
     sun.attach(new Renderer3D(sun, model));
     
     GameObject camera = new GameObject(scene);
-    Camera cam = camera.attach(new Camera(camera)).get();
+    Camera cam = camera.attach(new Camera(camera));
     cam.setPosition(new Vector3(5, 4, 5));
     cam.setTarget(new Vector3(0, 2, 0));
     cam.setUp(new Vector3(0, 1, 0));
@@ -124,16 +124,16 @@ public class GUM {
     Canvas canv = new Canvas(null);
     canv.setTexture(parallax);
     canv.setSourceSize(new Vector2(.25f, .25f));
-    UI _ = bg.attach(new UI(bg, canv)).get();
+    UI _ = bg.attach(new UI(bg, canv));
     bg.attach(new Animate(bg, canv, 7.5f, 0));
     Canvas canv2 = new Canvas(null);
     canv2.setTexture(stars);
     canv2.setSourceSize(new Vector2(.25f, .25f));
-    UI _ = bg.attach(new UI(bg, canv2)).get();
+    UI _ = bg.attach(new UI(bg, canv2));
     
     GameObject title = new GameObject(scene);
-    UI _ = title.attach(new UI(title, GUM.buildUI())).get();
-    MusicPlayer musicPlayer = title.attach(new MusicPlayer(title, mainMenuMusic)).get();
+    UI _ = title.attach(new UI(title, GUM.buildUI()));
+    MusicPlayer musicPlayer = title.attach(new MusicPlayer(title, mainMenuMusic));
     musicPlayer.play();
     
     scene.add(bg, "background");

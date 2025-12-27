@@ -1,18 +1,21 @@
 package rayengine;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.TreeMap;
 
 public final class Scene implements Updatable, Renderable {
-  private String tag = "";
-  private GameObject camera = null;
-  private Map<String, GameObject> gameObjects = new TreeMap<>();
+  private String tag;
+  private GameObject camera;
+  private Map<String, GameObject> gameObjects;
 
-  public Scene() {}
+  public Scene() {
+    this.tag = "";
+    this.gameObjects = new TreeMap<>();
+  }
   
   public Scene(String tag) {
     this.tag = tag;
+    this.gameObjects = new TreeMap<>();
   }
 
   public boolean add(GameObject gameObject, String tag) {
@@ -26,12 +29,12 @@ public final class Scene implements Updatable, Renderable {
   public GameObject getByTagOr(String tag, GameObject other)  {
     return this.gameObjects.getOrDefault(tag, other);
   }
-  public Optional<GameObject> getByTag(String tag) {
-    return Optional.ofNullable(this.gameObjects.get(tag));
+  public GameObject getByTag(String tag) {
+    return this.gameObjects.get(tag);
   }
 
-  public Optional<GameObject> getCamera() {
-    return Optional.ofNullable(this.camera);
+  public GameObject getCamera() {
+    return this.camera;
   }
 
   public String getTag(){
@@ -39,7 +42,7 @@ public final class Scene implements Updatable, Renderable {
   }
 
   public boolean setCamera(GameObject camera) {
-    if(camera.getComponent(Camera.class).isPresent()) {
+    if(camera.getComponent(Camera.class) != null) {
       this.camera = camera;
       return true;
     }

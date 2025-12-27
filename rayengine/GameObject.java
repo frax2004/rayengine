@@ -2,23 +2,22 @@ package rayengine;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 public final class GameObject implements Updatable, Renderable {
-  private List<Component> components = new ArrayList<>();
-  private Scene parentScene = null;
-  private Transform transform = new Transform(this, Vector3.ZERO.copy(), Vector3.ZERO.copy(), Vector3.ONE.copy());
+  private List<Component> components;
+  private Scene parentScene;
+  private Transform transform;
 
   public GameObject(Scene scene) {
     this.parentScene = scene;
-    this.attach(this.transform);
+    this.components = new ArrayList<>();
+    this.transform = this.attach(new Transform(this));
   }
 
-  public <T extends Component> Optional<T> attach(T component) {
-    return Optional
-    .ofNullable(component)
-    .filter(c -> this.components.add((Component)c));
+  public <T extends Component> T attach(T component) {
+    this.components.add(component);
+    return component;
   }
 
   public <T extends Component> boolean detach(T component) {
@@ -33,22 +32,12 @@ public final class GameObject implements Updatable, Renderable {
     return this.parentScene;
   }
 
-  public <T extends Component> Optional<T> getComponent(Class<T> type) {
-    return this
-    .components
-    .stream()
-    .filter(type::isInstance)
-    .map(type::cast)
-    .findFirst();
+  public <T extends Component> T getComponent(Class<T> type) {
+    return this.components.stream().filter(type::isInstance).map(type::cast).findFirst().orElse(null);
   }
 
   public <T extends Component> List<T> getComponents(Class<T> type) {
-    return this
-    .components
-    .stream()
-    .filter(type::isInstance)
-    .map(type::cast)
-    .toList();
+    return this.components.stream().filter(type::isInstance).map(type::cast).toList();
   }
 
   @Override 
@@ -59,6 +48,7 @@ public final class GameObject implements Updatable, Renderable {
     .map(Updatable.class::cast)
     .forEach(Updatable::update);
   }
+
   @Override 
   public void render() {
     this.components

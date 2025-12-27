@@ -1,9 +1,8 @@
 package rayengine;
 
-import java.util.Optional;
 import com.raylib.Raylib;
 
-public class Texture implements Resource {
+public class Texture implements Resource<Raylib.Texture> {
   private Raylib.Texture texture = null;
 
   public Texture(String path) {
@@ -15,8 +14,9 @@ public class Texture implements Resource {
     return Raylib.IsTextureValid(this.texture);
   }
 
-  public Optional<Raylib.Texture> unwrap() {
-    return Optional.ofNullable(this.texture);
+  @Override
+  public Raylib.Texture unwrap() {
+    return this.texture;
   }
 
   @Override

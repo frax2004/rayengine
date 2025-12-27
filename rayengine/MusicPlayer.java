@@ -1,7 +1,5 @@
 package rayengine;
 
-import java.util.Optional;
-import java.util.function.Predicate;
 
 import com.raylib.Raylib;
 
@@ -13,61 +11,51 @@ public final class MusicPlayer extends Component implements Updatable {
     this.music = music;
   }
 
-  public Optional<Music> unwrap() {
-    return Optional.ofNullable(this.music);
+  public Music unwrap() {
+    return this.music;
   }
 
   public void update() {
-    unwrap()
-    .flatMap(Music::unwrap)
-    .ifPresent(Raylib::UpdateMusicStream);
+    if(this.music != null) {
+      Raylib.UpdateMusicStream(this.music.unwrap());
+    }
   }
 
   public void play() {
-    unwrap()
-    .flatMap(Music::unwrap)
-    .filter(Predicate.not(Raylib::IsMusicStreamPlaying))
-    .ifPresent(Raylib::PlayMusicStream);
+    if(this.music != null && !Raylib.IsMusicStreamPlaying(this.music.unwrap())) {
+      Raylib.PlayMusicStream(this.music.unwrap());
+    }
   }
 
   public void pause() {
-    unwrap()
-    .flatMap(Music::unwrap)
-    .filter(Raylib::IsMusicStreamPlaying)
-    .ifPresent(Raylib::PauseMusicStream);
+    if(this.music != null && Raylib.IsMusicStreamPlaying(this.music.unwrap())) {
+      Raylib.PauseMusicStream(this.music.unwrap());
+    }
   }
 
   public void resume() {
-    unwrap()
-    .flatMap(Music::unwrap)
-    .filter(Predicate.not(Raylib::IsMusicStreamPlaying))
-    .ifPresent(Raylib::PauseMusicStream);
+    if(this.music != null && !Raylib.IsMusicStreamPlaying(this.music.unwrap())) {
+      Raylib.ResumeMusicStream(this.music.unwrap());
+    }
   }
 
   public void stop() {
-    unwrap()
-    .flatMap(Music::unwrap)
-    .filter(Raylib::IsMusicStreamPlaying)
-    .ifPresent(Raylib::StopMusicStream);
+    if(this.music != null) {
+      Raylib.StopMusicStream(this.music.unwrap());
+    }
   }
 
   public void rewind() {
-    unwrap()
-    .flatMap(Music::unwrap)
-    .ifPresent(x -> Raylib.SeekMusicStream(x, 0));
+    if(this.music != null) {
+      Raylib.SeekMusicStream(this.music.unwrap(), 0);
+    }
   }
 
   public boolean isPlaying() {
-    return unwrap()
-    .flatMap(Music::unwrap)
-    .filter(Raylib::IsMusicStreamPlaying)
-    .isPresent();
+    return this.music != null && Raylib.IsMusicStreamPlaying(this.music.unwrap());
   }
 
   public boolean isPaused() {
-    return unwrap()
-    .flatMap(Music::unwrap)
-    .filter(Predicate.not(Raylib::IsMusicStreamPlaying))
-    .isPresent();
+    return this.music != null && !Raylib.IsMusicStreamPlaying(this.music.unwrap());
   }
 }

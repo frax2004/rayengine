@@ -197,7 +197,7 @@ public final class Button extends StatefullWidget {
     ).unwrap();
 
     if(this.texture != null) {
-      Raylib.Texture handle = this.texture.unwrap().get();
+      Raylib.Texture handle = this.texture.unwrap();
       Raylib.DrawTexturePro(
         handle,
         new Rectangle(
@@ -213,7 +213,7 @@ public final class Button extends StatefullWidget {
       );
     } else Raylib.DrawRectangleRec(dest, this.color);
 
-    final Raylib.Font font = this.font != null ? this.font.unwrap().get() : Raylib.GetFontDefault();
+    final Raylib.Font font = this.font != null ? this.font.unwrap() : Raylib.GetFontDefault();
     final float fontSize = Button.getFitFontSize(font, text, dest.width(), dest.height())*fontScale;
     final float spacing =  fontSize/10.f;
     final Raylib.Vector2 textSize = Raylib.MeasureTextEx(font, text, fontSize, spacing);

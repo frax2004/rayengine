@@ -1,10 +1,9 @@
 package rayengine;
 
-import java.util.Optional;
 import com.raylib.Raylib;
 
 
-public final class Model implements Resource {
+public final class Model implements Resource<Raylib.Model> {
   private Raylib.Model model = null;
   
   public Model(String path) {
@@ -15,8 +14,10 @@ public final class Model implements Resource {
     Raylib.UnloadModel(this.model);
     this.model = null;
   }
-  public Optional<Raylib.Model> unwrap() {
-    return Optional.ofNullable(this.model);
+
+  @Override
+  public Raylib.Model unwrap() {
+    return this.model;
   }
 
   @Override
