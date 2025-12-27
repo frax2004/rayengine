@@ -2,6 +2,7 @@ package gum;
 
 import com.raylib.Raylib;
 
+import rayengine.Camera;
 import rayengine.Font;
 import rayengine.Game;
 import rayengine.GameBuilder;
@@ -10,8 +11,8 @@ import rayengine.Music;
 import rayengine.MusicPlayer;
 import rayengine.ResourceManager;
 import rayengine.Scene;
-import rayengine.SceneBuilder;
 import rayengine.Texture;
+import rayengine.Renderer3D;
 import rayengine.ui.ButtonBuilder;
 import rayengine.ui.Canvas;
 import rayengine.ui.Direction;
@@ -20,6 +21,8 @@ import rayengine.ui.StackLayout;
 import rayengine.ui.Widget;
 import rayengine.UI;
 import rayengine.Vector2;
+import rayengine.Vector3;
+import rayengine.Model;
 
 
 public class GUM {
@@ -87,7 +90,26 @@ public class GUM {
   }
 
   private static Scene buildLobby() {
-    return new Scene();
+    Model model = GUM.resourceManager.get(Model.class, "sun");
+
+    Scene scene = new Scene("Lobby");
+
+    GameObject sun = new GameObject(scene);
+    sun.attach(new Renderer3D(sun, model));
+    
+    GameObject camera = new GameObject(scene);
+    Camera cam = camera.attach(new Camera(camera)).get();
+    cam.setPosition(new Vector3(5, 4, 5));
+    cam.setTarget(new Vector3(0, 2, 0));
+    cam.setUp(new Vector3(0, 1, 0));
+    cam.setFovy(45);
+    cam.setProjection(Raylib.CAMERA_FREE);
+
+    scene.add(camera, "Camera");
+    scene.add(sun, "Sun");
+    scene.setCamera(camera);
+
+    return scene;
   }
 
   private static Scene buildMainMenu() {
@@ -95,8 +117,10 @@ public class GUM {
     Texture parallax = GUM.resourceManager.get(Texture.class, "background");
     Texture stars = GUM.resourceManager.get(Texture.class, "stars");
     Music mainMenuMusic = GUM.resourceManager.get(Music.class, "mainMenuMusic");
+    
+    Scene scene = new Scene("Main Menu");
 
-    GameObject bg = new GameObject();
+    GameObject bg = new GameObject(scene);
     Canvas canv = new Canvas(null);
     canv.setTexture(parallax);
     canv.setSourceSize(new Vector2(.25f, .25f));
@@ -107,16 +131,15 @@ public class GUM {
     canv2.setSourceSize(new Vector2(.25f, .25f));
     UI _ = bg.attach(new UI(bg, canv2)).get();
     
-    GameObject title = new GameObject();
+    GameObject title = new GameObject(scene);
     UI _ = title.attach(new UI(title, GUM.buildUI())).get();
     MusicPlayer musicPlayer = title.attach(new MusicPlayer(title, mainMenuMusic)).get();
     musicPlayer.play();
     
-    return new SceneBuilder()
-    .setTag("Main Menu")
-    .add("Parallax", bg)
-    .add("Title", title)
-    .build();
+    scene.add(bg, "background");
+    scene.add(title, "ui");
+
+    return scene;
   }
 
   private static void loadAllResources() {
@@ -126,6 +149,7 @@ public class GUM {
     GUM.resourceManager.add("impact", new Font("C:/Windows/Fonts/impact.ttf"));
     GUM.resourceManager.add("background", new Texture("assets/textures/background.png"));
     GUM.resourceManager.add("stars", new Texture("assets/textures/stars.png"));
+    GUM.resourceManager.add("sun", new Model("assets/models/sun.obj"));
   }
 
   public static void run() {

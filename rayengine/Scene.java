@@ -39,7 +39,6 @@ public final class Scene implements Updatable, Renderable {
   }
 
   public boolean setCamera(GameObject camera) {
-
     if(camera.getComponent(Camera.class).isPresent()) {
       this.camera = camera;
       return true;

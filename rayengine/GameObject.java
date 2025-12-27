@@ -3,13 +3,17 @@ package rayengine;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 public final class GameObject implements Updatable, Renderable {
   private List<Component> components = new ArrayList<>();
+  private Scene parentScene = null;
+  private Transform transform = new Transform(this, Vector3.ZERO.copy(), Vector3.ZERO.copy(), Vector3.ONE.copy());
 
-  public GameObject() {}
+  public GameObject(Scene scene) {
+    this.parentScene = scene;
+    this.attach(this.transform);
+  }
 
   public <T extends Component> Optional<T> attach(T component) {
     return Optional
@@ -20,7 +24,15 @@ public final class GameObject implements Updatable, Renderable {
   public <T extends Component> boolean detach(T component) {
     return this.components.remove(component);
   }
-  
+
+  public Transform getTransform() {
+    return this.transform;
+  }
+
+  public Scene getParentScene() {
+    return this.parentScene;
+  }
+
   public <T extends Component> Optional<T> getComponent(Class<T> type) {
     return this
     .components

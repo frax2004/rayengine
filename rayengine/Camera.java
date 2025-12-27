@@ -6,7 +6,7 @@ import com.raylib.Raylib;
 public final class Camera extends Component implements Updatable {
 
   private int cameraMode = 0;
-  private Raylib.Camera3D camera = null;
+  private Raylib.Camera3D camera = new Raylib.Camera3D();
 
   public Camera(GameObject parent) {
     super(parent);
