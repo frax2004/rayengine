@@ -1,21 +1,30 @@
 package rayengine;
 
+
 import java.util.Map;
 import java.util.TreeMap;
+
+
+import com.raylib.Raylib;
+
+import rayengine.components.Camera3D;
 
 public final class Scene implements Updatable, Renderable {
   private String tag;
   private GameObject camera;
   private Map<String, GameObject> gameObjects;
+  private RenderLayer layer2D;
+  private RenderLayer layer3D;
 
   public Scene() {
-    this.tag = "";
-    this.gameObjects = new TreeMap<>();
+    this("");
   }
   
   public Scene(String tag) {
     this.tag = tag;
     this.gameObjects = new TreeMap<>();
+    this.layer2D = new RenderLayer();
+    this.layer3D = new RenderLayer();
   }
 
   public boolean add(GameObject gameObject, String tag) {
@@ -33,6 +42,14 @@ public final class Scene implements Updatable, Renderable {
     return this.gameObjects.get(tag);
   }
 
+  public RenderLayer getLayer2D() {
+    return layer2D;
+  }
+
+  public RenderLayer getLayer3D() {
+    return layer3D;
+  }
+
   public GameObject getCamera() {
     return this.camera;
   }
@@ -42,7 +59,7 @@ public final class Scene implements Updatable, Renderable {
   }
 
   public boolean setCamera(GameObject camera) {
-    if(camera.getComponent(Camera.class) != null) {
+    if(camera.getComponent(Camera3D.class) != null) {
       this.camera = camera;
       return true;
     }
@@ -54,12 +71,20 @@ public final class Scene implements Updatable, Renderable {
   }
 
   @Override
-  public void update()  {
+  public void update() {
     this.gameObjects.forEach((s, g) -> g.update());
   }
   
   @Override
   public void render() {
-    this.gameObjects.forEach((s, g) -> g.render());
+
+    if(this.camera != null) {
+      Raylib.BeginMode3D(this.camera.getComponent(Camera3D.class).unwrap());
+      layer3D.render();
+      Raylib.EndMode3D();
+    }
+
+    layer2D.render();
   }
+
 }

@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import com.raylib.Raylib;
-
-import rayengine.Rectangle;
 import rayengine.Vector2;
 
 public abstract class Layout extends StatefullWidget {

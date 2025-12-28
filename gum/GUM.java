@@ -2,27 +2,29 @@ package gum;
 
 import com.raylib.Raylib;
 
-import rayengine.Camera;
 import rayengine.Font;
 import rayengine.Game;
 import rayengine.GameBuilder;
 import rayengine.GameObject;
 import rayengine.Music;
-import rayengine.MusicPlayer;
 import rayengine.ResourceManager;
 import rayengine.Scene;
 import rayengine.Texture;
-import rayengine.Renderer3D;
+import rayengine.Model;
+
 import rayengine.ui.ButtonBuilder;
 import rayengine.ui.Canvas;
 import rayengine.ui.Direction;
 import rayengine.ui.Margin;
 import rayengine.ui.StackLayout;
 import rayengine.ui.Widget;
-import rayengine.UI;
 import rayengine.Vector2;
 import rayengine.Vector3;
-import rayengine.Model;
+
+import rayengine.components.Camera3D;
+import rayengine.components.MusicPlayer;
+import rayengine.components.ModelRenderer;
+import rayengine.components.UI;
 
 
 public class GUM {
@@ -76,13 +78,13 @@ public class GUM {
     buttons.add(
       builder
       .setText("OPTIONS")
-      .setOnMouseButtonPressed((_, _) -> {})
+      .setOnMouseButtonPressed((__, ___) -> {})
       .build()
     );
     buttons.add(
       builder
       .setText("CREDITS")
-      .setOnMouseButtonPressed((_, _) -> {})
+      .setOnMouseButtonPressed((__, ___) -> {})
       .build()
     );
 
@@ -95,10 +97,10 @@ public class GUM {
     Scene scene = new Scene("Lobby");
 
     GameObject sun = new GameObject(scene);
-    sun.attach(new Renderer3D(sun, model));
+    sun.attach(new ModelRenderer(sun, model));
     
     GameObject camera = new GameObject(scene);
-    Camera cam = camera.attach(new Camera(camera));
+    Camera3D cam = camera.attach(new Camera3D(camera));
     cam.setPosition(new Vector3(5, 4, 5));
     cam.setTarget(new Vector3(0, 2, 0));
     cam.setUp(new Vector3(0, 1, 0));
@@ -124,15 +126,15 @@ public class GUM {
     Canvas canv = new Canvas(null);
     canv.setTexture(parallax);
     canv.setSourceSize(new Vector2(.25f, .25f));
-    UI _ = bg.attach(new UI(bg, canv));
+    bg.attach(new UI(bg, canv));
     bg.attach(new Animate(bg, canv, 7.5f, 0));
     Canvas canv2 = new Canvas(null);
     canv2.setTexture(stars);
     canv2.setSourceSize(new Vector2(.25f, .25f));
-    UI _ = bg.attach(new UI(bg, canv2));
+    bg.attach(new UI(bg, canv2));
     
     GameObject title = new GameObject(scene);
-    UI _ = title.attach(new UI(title, GUM.buildUI()));
+    title.attach(new UI(title, GUM.buildUI()));
     MusicPlayer musicPlayer = title.attach(new MusicPlayer(title, mainMenuMusic));
     musicPlayer.play();
     
@@ -143,13 +145,15 @@ public class GUM {
   }
 
   private static void loadAllResources() {
+    System.out.println("----------------- Loading assets ------------------");
+    GUM.resourceManager.add("sun", new Model("assets/models/sun.obj"));
     GUM.resourceManager.add("mainMenuMusic", new Music("assets/music/interstellar.mp3"));
     GUM.resourceManager.add("titleScreen", new Texture("assets/textures/titlescreen.png"));
     GUM.resourceManager.add("button", new Texture("assets/textures/button.png"));
     GUM.resourceManager.add("impact", new Font("C:/Windows/Fonts/impact.ttf"));
     GUM.resourceManager.add("background", new Texture("assets/textures/background.png"));
     GUM.resourceManager.add("stars", new Texture("assets/textures/stars.png"));
-    GUM.resourceManager.add("sun", new Model("assets/models/sun.obj"));
+    System.out.println("---------------------------------------------------");
   }
 
   public static void run() {

@@ -1,21 +1,21 @@
 package rayengine.ui;
 
-import java.util.Optional;
-
-import rayengine.Renderable;
+import rayengine.Renderable2D;
 import rayengine.Vector2;
 
-public abstract class Widget implements Renderable {
-  private Widget parent = null;
-  private Vector2 position = Vector2.ZERO.copy();
-  private Vector2 size = Vector2.ZERO.copy();
+public abstract class Widget implements Renderable2D {
+  private Widget parent;
+  private Vector2 position;
+  private Vector2 size;
 
   public Widget(Widget parent) {
     this.parent = parent;
+    this.position = Vector2.ZERO.copy();
+    this.size = Vector2.ZERO.copy();
   }
 
-  public Optional<? extends Widget> getParentWidget() {
-    return Optional.ofNullable(this.parent);
+  public Widget getParentWidget() {
+    return this.parent;
   }
 
   public Vector2 getSize() {

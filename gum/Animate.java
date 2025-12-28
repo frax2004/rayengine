@@ -3,8 +3,8 @@ package gum;
 import com.raylib.Raylib;
 
 import rayengine.GameObject;
-import rayengine.Script;
 import rayengine.Vector2;
+import rayengine.components.Script;
 import rayengine.ui.Canvas;
 
 public class Animate extends Script {

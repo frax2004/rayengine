@@ -9,6 +9,7 @@ public final class Model implements Resource<Raylib.Model> {
   public Model(String path) {
     this.model = Raylib.LoadModel(path);
   }
+  
   @Override
   public void release() {
     Raylib.UnloadModel(this.model);

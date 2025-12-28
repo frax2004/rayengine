@@ -1,10 +1,9 @@
 package rayengine;
 
-
 import com.raylib.Raylib;
 
 public final class Font implements Resource<Raylib.Font> {
-  private Raylib.Font font = null;
+  private Raylib.Font font;
   
   public Font(String path) {
     this.font = Raylib.LoadFont(path);

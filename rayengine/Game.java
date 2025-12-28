@@ -1,23 +1,13 @@
 package rayengine;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.raylib.Raylib;
 
 public class Game {
   private final String name;
-  private List<Scene> scenes = new ArrayList<>();
-  private Scene activeScene = null;
-
-  public Game() {
-    this.name = "";
-  }
-
-  public Game(String name) {
-    this.name = name;
-  }
+  private List<Scene> scenes;
+  private Scene activeScene;
 
   public Game(String name, List<Scene> scenes, Scene activeScene) {
     this.name = name;
@@ -33,8 +23,8 @@ public class Game {
     return this.scenes;
   }
   
-  public Optional<Scene> getActiveScene() {
-    return Optional.ofNullable(this.activeScene);
+  public Scene getActiveScene() {
+    return this.activeScene;
   }
 
   public void setActiveScene(Scene activeScene) {

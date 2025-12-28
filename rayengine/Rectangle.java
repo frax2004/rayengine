@@ -5,11 +5,33 @@ import com.raylib.Raylib;
 public final class Rectangle {
   public float x, y, width, height;
 
+  public Rectangle(Raylib.Rectangle rect) {
+    this.x = rect.x();
+    this.y = rect.y();
+    this.width = rect.width();
+    this.height = rect.height();
+  }
+
+  public Rectangle(Vector2 position, Vector2 size) {
+    this.x = position.x;
+    this.y = position.y;
+    this.width = size.x;
+    this.height = size.y;
+  }
+
   public Rectangle(float x, float y, float width, float height) {
     this.x = x;
     this.y = y;
     this.width = width; 
     this.height = height;
+  }
+
+  public Vector2 getPosition() {
+    return new Vector2(this.x, this.y);
+  }
+  
+  public Vector2 getSize() {
+    return new Vector2(this.width, this.height);
   }
 
   public Raylib.Rectangle unwrap() {
@@ -20,6 +42,18 @@ public final class Rectangle {
     .width(this.width)
     .height(this.height);
     return rect;
+  }
+
+  public boolean intersectsWith(Rectangle other) {
+    return Raylib.CheckCollisionRecs(this.unwrap(), other.unwrap());
+  }
+
+  public boolean intersectsWith(Vector2 other) {
+    return Raylib.CheckCollisionPointRec(other.unwrap(), this.unwrap());
+  }
+
+  public Rectangle intersect(Rectangle other) {
+    return new Rectangle(Raylib.GetCollisionRec(this.unwrap(), other.unwrap()));
   }
 
   @Override

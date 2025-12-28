@@ -1,14 +1,19 @@
-package rayengine;
+package rayengine.components;
 
 
 import com.raylib.Raylib;
 
-public final class Camera extends Component implements Updatable {
+import rayengine.Component;
+import rayengine.GameObject;
+import rayengine.Updatable;
+import rayengine.Vector3;
+
+public final class Camera3D extends Component implements Updatable {
 
   private int cameraMode = 0;
   private Raylib.Camera3D camera = new Raylib.Camera3D();
 
-  public Camera(GameObject parent) {
+  public Camera3D(GameObject parent) {
     super(parent);
   }
 

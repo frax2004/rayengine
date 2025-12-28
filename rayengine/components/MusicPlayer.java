@@ -1,7 +1,12 @@
-package rayengine;
+package rayengine.components;
 
 
 import com.raylib.Raylib;
+
+import rayengine.Component;
+import rayengine.GameObject;
+import rayengine.Music;
+import rayengine.Updatable;
 
 public final class MusicPlayer extends Component implements Updatable {
   private Music music = null;
@@ -16,7 +21,7 @@ public final class MusicPlayer extends Component implements Updatable {
   }
 
   public void update() {
-    if(this.music != null) {
+    if(this.isActive() && this.music != null) {
       Raylib.UpdateMusicStream(this.music.unwrap());
     }
   }

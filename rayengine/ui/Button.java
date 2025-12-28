@@ -11,24 +11,36 @@ import rayengine.Rectangle;
 import rayengine.Texture;
 import rayengine.Vector2;
 
-
 public final class Button extends StatefullWidget {
 
   private Texture texture = null;
-  private Color color = Raylib.GetColor(0x2f2f2fff);
-  private Color foreground = Raylib.GetColor(0xffffffff);
-  private String text = "";
-  private Font font = null;
-  private BiConsumer<Button, Integer> onMouseButtonPressed = (sender, btn) -> {};
-  private BiConsumer<Button, Integer> onMouseButtonReleased = (sender, btn) -> {};
-  private Consumer<Button> onHoverEnter = (sender) -> {};
-  private Consumer<Button> onHover = (sender) -> {};
-  private Consumer<Button> onHoverExit = (sender) -> {};
-  private float fontScale = 1;
-  private boolean isHovering = false;
+  private Color color;
+  private Color foreground;
+  private String text;
+  private Font font;
+  private BiConsumer<Button, Integer> onMouseButtonPressed;
+  private BiConsumer<Button, Integer> onMouseButtonReleased;
+  private Consumer<Button> onHoverEnter;
+  private Consumer<Button> onHover;
+  private Consumer<Button> onHoverExit;
+  private float fontScale;
+  private boolean isHovering;
 
   public Button(Widget parent) {
-    super(parent);
+    this(
+      parent,
+      null,
+      Raylib.GetColor(0x2f2f2fff),
+      Raylib.GetColor(0xffffffff),
+      "",
+      null,
+      (sender, btn) -> {},
+      (sender, btn) -> {},
+      (sender) -> {},
+      (sender) -> {},
+      (sender) -> {},
+      1
+    );
   }
   
   public Button(

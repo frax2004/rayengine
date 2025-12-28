@@ -1,6 +1,5 @@
 package rayengine.ui;
 
-import java.util.Optional;
 
 import com.raylib.Raylib;
 
@@ -9,24 +8,26 @@ import rayengine.Texture;
 import rayengine.Vector2;
 
 public final class Canvas extends StatelessWidget {
-  private Vector2 srcPosition = Vector2.ZERO.copy(); // [0, 1]
-  private Vector2 srcSize = Vector2.ONE.copy(); // [0, 1]
-  private Texture texture = null;
-  private Rectangle scissor = null;
-  private float rotation = 0;
+  private Vector2 srcPosition;
+  private Vector2 srcSize;
+  private Texture texture;
+  private Rectangle scissor;
+  private float rotation;
 
   public Canvas(Widget parent) {
-    super(parent);
-    this.texture = null;
+    this(parent, null);
   }
 
   public Canvas(Widget parent, Texture texture) {
     super(parent);
     this.texture = texture;
+    this.rotation = 0;
+    this.srcPosition = Vector2.ZERO.copy();
+    this.srcSize = Vector2.ONE.copy();
   }
   
-  public Optional<Rectangle> getScissorRect() {
-    return Optional.ofNullable(this.scissor);
+  public Rectangle getScissorRect() {
+    return this.scissor;
   }
 
   public void setScissorRect(Rectangle rect) {
@@ -72,12 +73,8 @@ public final class Canvas extends StatelessWidget {
 
   @Override
   public void render() {
-    float w = this.texture.flatMap(Texture::unwrap)
-    .map(Raylib.Texture::width)
-    .orElse(0);
-    float h = this.texture.flatMap(Texture::unwrap)
-    .map(Raylib.Texture::height)
-    .orElse(0);
+    float w = this.texture != null ? this.texture.unwrap().width() : 0;
+    float h = this.texture != null ? this.texture.unwrap().height() : 0;
     
     final Rectangle source = new Rectangle(
       w*this.srcPosition.x,

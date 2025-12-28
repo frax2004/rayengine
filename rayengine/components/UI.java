@@ -1,13 +1,16 @@
-package rayengine;
-
-import java.util.Optional;
+package rayengine.components;
 
 import com.raylib.Raylib;
 
+import rayengine.Component;
+import rayengine.GameObject;
+import rayengine.Renderable2D;
+import rayengine.Updatable;
+import rayengine.Vector2;
 import rayengine.ui.StatefullWidget;
 import rayengine.ui.Widget;
 
-public final class UI extends Component implements Updatable, Renderable {
+public final class UI extends Component implements Updatable, Renderable2D {
 
   private Widget root = null;
 
@@ -16,8 +19,8 @@ public final class UI extends Component implements Updatable, Renderable {
     this.root = root;
   }
 
-  public Optional<? extends Widget> getRootWidget() {
-    return Optional.ofNullable(this.root);
+  public Widget getRootWidget() {
+    return this.root;
   }
   
   public void setRootWidget(Widget root) {
@@ -26,6 +29,7 @@ public final class UI extends Component implements Updatable, Renderable {
 
   @Override
   public void update() {
+    if(!isActive()) return;
     if(this.root != null) {
       this.root.setPosition(Vector2.ZERO.copy());
       this.root.setSize(new Vector2(Raylib.GetRenderWidth(), Raylib.GetRenderHeight()));
@@ -38,8 +42,9 @@ public final class UI extends Component implements Updatable, Renderable {
   
   @Override
   public void render() {
-    if(this.root != null) 
+    if(this.isActive() && this.root != null) {
       this.root.render();
+    }
   }
 
 }
