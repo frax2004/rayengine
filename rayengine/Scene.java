@@ -77,14 +77,15 @@ public final class Scene implements Updatable, Renderable {
   
   @Override
   public void render() {
-
+    
     if(this.camera != null) {
       Raylib.BeginMode3D(this.camera.getComponent(Camera3D.class).unwrap());
-      layer3D.render();
+      Raylib.DrawGrid(10, 3);
+      this.layer3D.render();
       Raylib.EndMode3D();
     }
-
-    layer2D.render();
+    
+    this.layer2D.render();
   }
 
 }

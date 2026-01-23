@@ -49,7 +49,7 @@ public class Game {
         activeScene.update();
 
       Raylib.BeginDrawing();
-      Raylib.ClearBackground(Raylib.GetColor(0x141C33FF));
+      Raylib.ClearBackground(Raylib.GetColor(0x000000ff));
       
       if(this.activeScene != null)
         activeScene.render();

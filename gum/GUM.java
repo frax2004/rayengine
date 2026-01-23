@@ -1,5 +1,7 @@
 package gum;
 
+import java.util.List;
+
 import com.raylib.Raylib;
 
 import rayengine.Font;
@@ -23,6 +25,7 @@ import rayengine.Vector3;
 
 import rayengine.components.Camera3D;
 import rayengine.components.MusicPlayer;
+import rayengine.components.Transform;
 import rayengine.components.ModelRenderer;
 import rayengine.components.UI;
 
@@ -92,23 +95,53 @@ public class GUM {
   }
 
   private static Scene buildLobby() {
-    Model model = GUM.resourceManager.get(Model.class, "sun");
+
+    Model sun = GUM.resourceManager.get(Model.class, "sun");
+    Model space = GUM.resourceManager.get(Model.class, "space");
+    var planets = List.of(
+      GUM.resourceManager.get(Model.class, "rocksy"),
+      GUM.resourceManager.get(Model.class, "groover"),
+      GUM.resourceManager.get(Model.class, "mars"),
+      GUM.resourceManager.get(Model.class, "earth"),
+      GUM.resourceManager.get(Model.class, "neptune")
+    );
 
     Scene scene = new Scene("Lobby");
 
-    GameObject sun = new GameObject(scene);
-    sun.attach(new ModelRenderer(sun, model));
+    GameObject spaceObj = new GameObject(scene);
+    spaceObj.getTransform().setScale(new Vector3(100, 100, 100));
+    spaceObj.attach(new ModelRenderer(spaceObj, space));
+    spaceObj.getTransform().setPosition(new Vector3(0, -20, 0));
+    spaceObj.getTransform().setRotation(new Vector3(45, 45, 45));
+
+    GameObject sunObject = new GameObject(scene);
+    sunObject.getTransform().setScale(new Vector3(100, 100, 100));
+    sunObject.attach(new ModelRenderer(sunObject, sun));
+    
+    int i = 1;
+    for(Model model : planets) {
+      GameObject planet = new GameObject(scene);
+      Transform transform = planet.getTransform();
+      transform.setScale(new Vector3(100, 100, 100));
+      transform.setPosition(new Vector3(i*7.f, 0, i*7.f));
+      planet.attach(new RotateScript(planet, i*7.f));
+      
+      planet.attach(new ModelRenderer(planet, model));
+      scene.add(planet, "planet#" + i);
+      i++;
+    }
     
     GameObject camera = new GameObject(scene);
     Camera3D cam = camera.attach(new Camera3D(camera));
-    cam.setPosition(new Vector3(5, 4, 5));
-    cam.setTarget(new Vector3(0, 2, 0));
+    cam.setPosition(new Vector3(20f, 20f, 20f));
+    cam.setTarget(new Vector3(0, 0, 0));
     cam.setUp(new Vector3(0, 1, 0));
     cam.setFovy(45);
-    cam.setProjection(Raylib.CAMERA_FREE);
+    cam.setProjection(Raylib.CAMERA_ORTHOGRAPHIC);
 
     scene.add(camera, "Camera");
-    scene.add(sun, "Sun");
+    scene.add(sunObject, "Sun");
+    scene.add(spaceObj, "space");
     scene.setCamera(camera);
 
     return scene;
@@ -146,7 +179,14 @@ public class GUM {
 
   private static void loadAllResources() {
     System.out.println("----------------- Loading assets ------------------");
+    GUM.resourceManager.add("space", new Model("assets/models/space.obj"));
+    GUM.resourceManager.add("earth", new Model("assets/models/earth.obj"));
+    GUM.resourceManager.add("mars", new Model("assets/models/mars.obj"));
+    GUM.resourceManager.add("groover", new Model("assets/models/groover.obj"));
+    GUM.resourceManager.add("neptune", new Model("assets/models/neptune.obj"));
+    GUM.resourceManager.add("rocksy", new Model("assets/models/rocksy.obj"));
     GUM.resourceManager.add("sun", new Model("assets/models/sun.obj"));
+
     GUM.resourceManager.add("mainMenuMusic", new Music("assets/music/interstellar.mp3"));
     GUM.resourceManager.add("titleScreen", new Texture("assets/textures/titlescreen.png"));
     GUM.resourceManager.add("button", new Texture("assets/textures/button.png"));
