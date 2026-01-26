@@ -21,24 +21,11 @@ public final class GameObject implements Updatable {
 
   public <T extends Component> T attach(T component) {
     this.components.add(component);
-    if(component instanceof Renderable2D renderable) {
-      this.parentScene.getLayer2D().add(renderable);
-    } else if(component instanceof Renderable3D renderable) {
-      this.parentScene.getLayer3D().add(renderable);
-    }
     return component;
   }
 
   public <T extends Component> boolean detach(T component) {
-    if(this.components.remove(component)) {
-      if(component instanceof Renderable3D renderable) {
-        this.parentScene.getLayer2D().remove(renderable);
-      } else if(component instanceof Renderable2D renderable) {
-        this.parentScene.getLayer3D().remove(renderable);
-      }
-      return true;
-    }
-    return false;
+    return this.components.remove(component);
   }
 
   public boolean isActive() {

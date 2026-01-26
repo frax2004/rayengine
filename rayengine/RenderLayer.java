@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class RenderLayer implements Renderable {
+  
   private List<Renderable> renderables;
 
   public RenderLayer() {
@@ -16,6 +17,10 @@ public final class RenderLayer implements Renderable {
 
   public void remove(Renderable renderable) {
     this.renderables.remove(renderable);
+  }
+
+  public List<Renderable> getRenderables() {
+    return new ArrayList<>(this.renderables);
   }
 
   @Override

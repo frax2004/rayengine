@@ -1,6 +1,5 @@
 package rayengine;
 
-
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -10,11 +9,11 @@ import com.raylib.Raylib;
 import rayengine.components.Camera3D;
 
 public final class Scene implements Updatable, Renderable {
+
   private String tag;
   private GameObject camera;
   private Map<String, GameObject> gameObjects;
-  private RenderLayer layer2D;
-  private RenderLayer layer3D;
+  private RenderLayer layer;
 
   public Scene() {
     this("");
@@ -23,16 +22,30 @@ public final class Scene implements Updatable, Renderable {
   public Scene(String tag) {
     this.tag = tag;
     this.gameObjects = new TreeMap<>();
-    this.layer2D = new RenderLayer();
-    this.layer3D = new RenderLayer();
+    this.layer = new RenderLayer();
   }
 
   public boolean add(GameObject gameObject, String tag) {
-    return this.gameObjects.putIfAbsent(tag, gameObject) == null;
+    if(this.gameObjects.putIfAbsent(tag, gameObject) == null) {
+      for(Component component : gameObject.getComponents()) {
+        if(component instanceof Renderable renderable) {
+          this.layer.add(renderable);
+        }
+      }
+      return true;
+    } else return false;
   }
-
+  
   public boolean remove(String tag)  {
-    return this.gameObjects.remove(tag) != null;
+    GameObject removed = this.gameObjects.remove(tag);
+    if(removed != null) {
+      for(Component component : removed.getComponents()) {
+        if(component instanceof Renderable renderable) {
+          this.layer.remove(renderable);
+        }
+      }
+      return true;
+    } else return false;
   }
 
   public GameObject getByTagOr(String tag, GameObject other)  {
@@ -40,14 +53,6 @@ public final class Scene implements Updatable, Renderable {
   }
   public GameObject getByTag(String tag) {
     return this.gameObjects.get(tag);
-  }
-
-  public RenderLayer getLayer2D() {
-    return layer2D;
-  }
-
-  public RenderLayer getLayer3D() {
-    return layer3D;
   }
 
   public GameObject getCamera() {
@@ -59,7 +64,7 @@ public final class Scene implements Updatable, Renderable {
   }
 
   public boolean setCamera(GameObject camera) {
-    if(camera.getComponent(Camera3D.class) != null) {
+    if(camera.getComponent(Camera3D.class) != null && this.gameObjects.containsValue(camera)) {
       this.camera = camera;
       return true;
     }
@@ -77,15 +82,15 @@ public final class Scene implements Updatable, Renderable {
   
   @Override
   public void render() {
-    
-    if(this.camera != null) {
-      Raylib.BeginMode3D(this.camera.getComponent(Camera3D.class).unwrap());
-      Raylib.DrawGrid(10, 3);
-      this.layer3D.render();
-      Raylib.EndMode3D();
+
+    for(Renderable renderable : this.layer.getRenderables()) {
+      if(renderable instanceof Renderable3D && this.camera != null) {
+        Raylib.BeginMode3D(this.camera.getComponent(Camera3D.class).unwrap());
+        renderable.render();
+        Raylib.EndMode3D();
+      } else renderable.render();
     }
     
-    this.layer2D.render();
   }
 
 }

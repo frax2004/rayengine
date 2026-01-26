@@ -1,6 +1,7 @@
 package gum;
 
 import java.util.List;
+import java.util.Random;
 
 import com.raylib.Raylib;
 
@@ -95,10 +96,12 @@ public class GUM {
   }
 
   private static Scene buildLobby() {
-
+    
+    Texture parallax = GUM.resourceManager.get(Texture.class, "background");
+    Texture stars = GUM.resourceManager.get(Texture.class, "stars");
     Model sun = GUM.resourceManager.get(Model.class, "sun");
-    Model space = GUM.resourceManager.get(Model.class, "space");
-    var planets = List.of(
+
+    List<Model> planets = List.of(
       GUM.resourceManager.get(Model.class, "rocksy"),
       GUM.resourceManager.get(Model.class, "groover"),
       GUM.resourceManager.get(Model.class, "mars"),
@@ -108,29 +111,36 @@ public class GUM {
 
     Scene scene = new Scene("Lobby");
 
-    GameObject spaceObj = new GameObject(scene);
-    spaceObj.getTransform().setScale(new Vector3(100, 100, 100));
-    spaceObj.attach(new ModelRenderer(spaceObj, space));
-    spaceObj.getTransform().setPosition(new Vector3(0, -20, 0));
-    spaceObj.getTransform().setRotation(new Vector3(45, 45, 45));
+    GameObject bg = new GameObject(scene);
+    Canvas canv = new Canvas(null);
+    canv.setTexture(parallax);
+    canv.setSourceSize(new Vector2(.25f, .25f));
+    bg.attach(new UI(bg, canv));
+    bg.attach(new Animate(bg, canv, 7.5f, 0));
+    Canvas canv2 = new Canvas(null);
+    canv2.setTexture(stars);
+    canv2.setSourceSize(new Vector2(.25f, .25f));
+    bg.attach(new UI(bg, canv2));
+    scene.add(bg, "background");
 
     GameObject sunObject = new GameObject(scene);
     sunObject.getTransform().setScale(new Vector3(100, 100, 100));
     sunObject.attach(new ModelRenderer(sunObject, sun));
-    
+
     int i = 1;
     for(Model model : planets) {
+
       GameObject planet = new GameObject(scene);
       Transform transform = planet.getTransform();
       transform.setScale(new Vector3(100, 100, 100));
-      transform.setPosition(new Vector3(i*7.f, 0, i*7.f));
       planet.attach(new RotateScript(planet, i*7.f));
+      planet.attach(new PlanetSelectionScript(planet));
       
       planet.attach(new ModelRenderer(planet, model));
       scene.add(planet, "planet#" + i);
       i++;
     }
-    
+
     GameObject camera = new GameObject(scene);
     Camera3D cam = camera.attach(new Camera3D(camera));
     cam.setPosition(new Vector3(20f, 20f, 20f));
@@ -141,7 +151,6 @@ public class GUM {
 
     scene.add(camera, "Camera");
     scene.add(sunObject, "Sun");
-    scene.add(spaceObj, "space");
     scene.setCamera(camera);
 
     return scene;
