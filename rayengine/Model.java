@@ -3,7 +3,7 @@ package rayengine;
 import com.raylib.Raylib;
 
 
-public final class Model implements Resource<Raylib.Model> {
+public final class Model implements Asset<Raylib.Model> {
   private Raylib.Model model = null;
   
   public Model(String path) {

@@ -2,7 +2,7 @@ package rayengine;
 
 import com.raylib.Raylib;
 
-public final class Music implements Resource<Raylib.Music> {
+public final class Music implements Asset<Raylib.Music> {
   private Raylib.Music music = null;
   
   public Music(String path) {

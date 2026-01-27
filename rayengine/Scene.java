@@ -3,7 +3,6 @@ package rayengine;
 import java.util.Map;
 import java.util.TreeMap;
 
-
 import com.raylib.Raylib;
 
 import rayengine.components.Camera3D;
@@ -13,45 +12,24 @@ public final class Scene implements Updatable, Renderable {
   private String tag;
   private GameObject camera;
   private Map<String, GameObject> gameObjects;
-  private RenderLayer layer;
 
-  public Scene() {
-    this("");
-  }
-  
   public Scene(String tag) {
     this.tag = tag;
     this.gameObjects = new TreeMap<>();
-    this.layer = new RenderLayer();
   }
 
-  public boolean add(GameObject gameObject, String tag) {
-    if(this.gameObjects.putIfAbsent(tag, gameObject) == null) {
-      for(Component component : gameObject.getComponents()) {
-        if(component instanceof Renderable renderable) {
-          this.layer.add(renderable);
-        }
-      }
-      return true;
-    } else return false;
+  public boolean add(GameObject gameObject) {
+    return this.gameObjects.putIfAbsent(gameObject.getTag(), gameObject) == null;
   }
   
   public boolean remove(String tag)  {
-    GameObject removed = this.gameObjects.remove(tag);
-    if(removed != null) {
-      for(Component component : removed.getComponents()) {
-        if(component instanceof Renderable renderable) {
-          this.layer.remove(renderable);
-        }
-      }
-      return true;
-    } else return false;
+    return this.gameObjects.remove(tag) != null;
   }
 
-  public GameObject getByTagOr(String tag, GameObject other)  {
+  public GameObject getOr(String tag, GameObject other)  {
     return this.gameObjects.getOrDefault(tag, other);
   }
-  public GameObject getByTag(String tag) {
+  public GameObject get(String tag) {
     return this.gameObjects.get(tag);
   }
 
@@ -77,20 +55,29 @@ public final class Scene implements Updatable, Renderable {
 
   @Override
   public void update() {
-    this.gameObjects.forEach((s, g) -> g.update());
+    for(GameObject gameObject : this.gameObjects.values()) {
+      if(gameObject.isActive()) gameObject.update();
+    }
   }
   
   @Override
   public void render() {
+    Raylib.Camera3D cam = this.camera != null ? this.camera.getComponent(Camera3D.class).unwrap() : null;
 
-    for(Renderable renderable : this.layer.getRenderables()) {
-      if(renderable instanceof Renderable3D && this.camera != null) {
-        Raylib.BeginMode3D(this.camera.getComponent(Camera3D.class).unwrap());
-        renderable.render();
-        Raylib.EndMode3D();
-      } else renderable.render();
+    for(GameObject gameObject : this.gameObjects.values()) {
+      if(!gameObject.isActive()) continue;
+
+      for(Component component : gameObject.getComponents()) {
+        if(!component.isActive()) continue;
+
+        if(component instanceof Renderable3D renderable && cam != null) {
+          Raylib.BeginMode3D(cam);
+          renderable.render();
+          Raylib.EndMode3D();
+        } else if(component instanceof Renderable2D renderable) renderable.render();
+      }
+
     }
-    
   }
 
 }

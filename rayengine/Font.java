@@ -2,7 +2,7 @@ package rayengine;
 
 import com.raylib.Raylib;
 
-public final class Font implements Resource<Raylib.Font> {
+public final class Font implements Asset<Raylib.Font> {
   private Raylib.Font font;
   
   public Font(String path) {

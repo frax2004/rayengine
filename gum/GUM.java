@@ -1,7 +1,6 @@
 package gum;
 
 import java.util.List;
-import java.util.Random;
 
 import com.raylib.Raylib;
 
@@ -32,15 +31,15 @@ import rayengine.components.UI;
 
 
 public class GUM {
-  static ResourceManager resourceManager = new ResourceManager();
+  static ResourceManager resourceManager = null;
   static Game instance = null;
   static Scene mainMenu = null;
   static Scene lobby = null;
 
   private static Widget buildUI() {
-    Texture texture = GUM.resourceManager.get(Texture.class, "titleScreen");
-    Texture btn = GUM.resourceManager.get(Texture.class, "button");
-    Font font = GUM.resourceManager.get(Font.class, "impact");
+    Texture texture = GUM.resourceManager.get(Texture.class, "assets/textures/titlescreen.png");
+    Texture btn = GUM.resourceManager.get(Texture.class, "assets/textures/button.png");
+    Font font = GUM.resourceManager.get(Font.class, "assets/fonts/impact.ttf");
 
     StackLayout layout = new StackLayout(null, Direction.HORIZONTAL);
     layout.setHorizontalMargin(.5f);
@@ -96,52 +95,53 @@ public class GUM {
   }
 
   private static Scene buildLobby() {
-    
-    Texture parallax = GUM.resourceManager.get(Texture.class, "background");
-    Texture stars = GUM.resourceManager.get(Texture.class, "stars");
-    Model sun = GUM.resourceManager.get(Model.class, "sun");
+
+    Texture parallax = GUM.resourceManager.get(Texture.class, "assets/textures/background.png");
+    Texture stars = GUM.resourceManager.get(Texture.class, "assets/textures/stars.png");
+    Model sun = GUM.resourceManager.get(Model.class, "assets/models/sun.obj");
 
     List<Model> planets = List.of(
-      GUM.resourceManager.get(Model.class, "rocksy"),
-      GUM.resourceManager.get(Model.class, "groover"),
-      GUM.resourceManager.get(Model.class, "mars"),
-      GUM.resourceManager.get(Model.class, "earth"),
-      GUM.resourceManager.get(Model.class, "neptune")
+      GUM.resourceManager.get(Model.class, "assets/models/rocksy.obj"),
+      GUM.resourceManager.get(Model.class, "assets/models/groover.obj"),
+      GUM.resourceManager.get(Model.class, "assets/models/mars.obj"),
+      GUM.resourceManager.get(Model.class, "assets/models/earth.obj"),
+      GUM.resourceManager.get(Model.class, "assets/models/neptune.obj")
     );
 
     Scene scene = new Scene("Lobby");
 
-    GameObject bg = new GameObject(scene);
+    GameObject bg = new GameObject(scene, "background");
     Canvas canv = new Canvas(null);
     canv.setTexture(parallax);
     canv.setSourceSize(new Vector2(.25f, .25f));
     bg.attach(new UI(bg, canv));
     bg.attach(new Animate(bg, canv, 7.5f, 0));
+
     Canvas canv2 = new Canvas(null);
     canv2.setTexture(stars);
     canv2.setSourceSize(new Vector2(.25f, .25f));
     bg.attach(new UI(bg, canv2));
-    scene.add(bg, "background");
+    scene.add(bg);
 
-    GameObject sunObject = new GameObject(scene);
+    GameObject sunObject = new GameObject(scene, "sun");
     sunObject.getTransform().setScale(new Vector3(100, 100, 100));
     sunObject.attach(new ModelRenderer(sunObject, sun));
 
     int i = 1;
-    for(Model model : planets) {
 
-      GameObject planet = new GameObject(scene);
+    for(Model model : planets) {
+      GameObject planet = new GameObject(scene, "planet#" + i);
       Transform transform = planet.getTransform();
       transform.setScale(new Vector3(100, 100, 100));
       planet.attach(new RotateScript(planet, i*7.f));
       planet.attach(new PlanetSelectionScript(planet));
       
       planet.attach(new ModelRenderer(planet, model));
-      scene.add(planet, "planet#" + i);
+      scene.add(planet);
       i++;
     }
 
-    GameObject camera = new GameObject(scene);
+    GameObject camera = new GameObject(scene, "camera");
     Camera3D cam = camera.attach(new Camera3D(camera));
     cam.setPosition(new Vector3(20f, 20f, 20f));
     cam.setTarget(new Vector3(0, 0, 0));
@@ -149,8 +149,8 @@ public class GUM {
     cam.setFovy(45);
     cam.setProjection(Raylib.CAMERA_ORTHOGRAPHIC);
 
-    scene.add(camera, "Camera");
-    scene.add(sunObject, "Sun");
+    scene.add(camera);
+    scene.add(sunObject);
     scene.setCamera(camera);
 
     return scene;
@@ -158,13 +158,13 @@ public class GUM {
 
   private static Scene buildMainMenu() {
 
-    Texture parallax = GUM.resourceManager.get(Texture.class, "background");
-    Texture stars = GUM.resourceManager.get(Texture.class, "stars");
-    Music mainMenuMusic = GUM.resourceManager.get(Music.class, "mainMenuMusic");
+    Texture parallax = GUM.resourceManager.get(Texture.class, "assets/textures/background.png");
+    Texture stars = GUM.resourceManager.get(Texture.class, "assets/textures/stars.png");
+    Music mainMenuMusic = GUM.resourceManager.get(Music.class, "assets/music/interstellar.mp3");
     
     Scene scene = new Scene("Main Menu");
 
-    GameObject bg = new GameObject(scene);
+    GameObject bg = new GameObject(scene, "Background");
     Canvas canv = new Canvas(null);
     canv.setTexture(parallax);
     canv.setSourceSize(new Vector2(.25f, .25f));
@@ -175,33 +175,23 @@ public class GUM {
     canv2.setSourceSize(new Vector2(.25f, .25f));
     bg.attach(new UI(bg, canv2));
     
-    GameObject title = new GameObject(scene);
+    GameObject title = new GameObject(scene, "Title");
     title.attach(new UI(title, GUM.buildUI()));
     MusicPlayer musicPlayer = title.attach(new MusicPlayer(title, mainMenuMusic));
     musicPlayer.play();
     
-    scene.add(bg, "background");
-    scene.add(title, "ui");
+    scene.add(bg);
+    scene.add(title);
 
     return scene;
   }
 
   private static void loadAllResources() {
     System.out.println("----------------- Loading assets ------------------");
-    GUM.resourceManager.add("space", new Model("assets/models/space.obj"));
-    GUM.resourceManager.add("earth", new Model("assets/models/earth.obj"));
-    GUM.resourceManager.add("mars", new Model("assets/models/mars.obj"));
-    GUM.resourceManager.add("groover", new Model("assets/models/groover.obj"));
-    GUM.resourceManager.add("neptune", new Model("assets/models/neptune.obj"));
-    GUM.resourceManager.add("rocksy", new Model("assets/models/rocksy.obj"));
-    GUM.resourceManager.add("sun", new Model("assets/models/sun.obj"));
-
-    GUM.resourceManager.add("mainMenuMusic", new Music("assets/music/interstellar.mp3"));
-    GUM.resourceManager.add("titleScreen", new Texture("assets/textures/titlescreen.png"));
-    GUM.resourceManager.add("button", new Texture("assets/textures/button.png"));
-    GUM.resourceManager.add("impact", new Font("C:/Windows/Fonts/impact.ttf"));
-    GUM.resourceManager.add("background", new Texture("assets/textures/background.png"));
-    GUM.resourceManager.add("stars", new Texture("assets/textures/stars.png"));
+    GUM.resourceManager = ResourceManager.loadFromFolder(
+      "assets", 
+      "assets/models/.*\\.png", "assets/models/.*\\.mtl"
+    );
     System.out.println("---------------------------------------------------");
   }
 
@@ -221,7 +211,6 @@ public class GUM {
 
     GUM.instance.run();
     resourceManager.releaseAll();
-
     Game.shutdown();
   }
 }

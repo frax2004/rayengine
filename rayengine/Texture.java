@@ -2,7 +2,7 @@ package rayengine;
 
 import com.raylib.Raylib;
 
-public class Texture implements Resource<Raylib.Texture> {
+public class Texture implements Asset<Raylib.Texture> {
   private Raylib.Texture texture = null;
 
   public Texture(String path) {
