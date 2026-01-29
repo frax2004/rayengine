@@ -1,7 +1,5 @@
 package gum;
 
-import com.raylib.Raylib;
-import com.raylib.Raylib.Ray;
 
 import rayengine.GameObject;
 import rayengine.components.ModelRenderer;

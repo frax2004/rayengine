@@ -7,41 +7,47 @@ import com.raylib.Raylib;
 
 import rayengine.components.Camera3D;
 
-public final class Scene implements Updatable, Renderable {
+public class Scene implements Updatable, Renderable {
 
   private String tag;
   private GameObject camera;
   private Map<String, GameObject> gameObjects;
+  private final Game parent;
 
-  public Scene(String tag) {
+  public Scene(Game parent, String tag) {
     this.tag = tag;
     this.gameObjects = new TreeMap<>();
+    this.parent = parent;
   }
 
-  public boolean add(GameObject gameObject) {
+  public final boolean add(GameObject gameObject) {
     return this.gameObjects.putIfAbsent(gameObject.getTag(), gameObject) == null;
   }
   
-  public boolean remove(String tag)  {
+  public final boolean remove(String tag)  {
     return this.gameObjects.remove(tag) != null;
   }
 
-  public GameObject getOr(String tag, GameObject other)  {
+  public final Game getParent() {
+    return this.parent;
+  }
+
+  public final GameObject getOr(String tag, GameObject other)  {
     return this.gameObjects.getOrDefault(tag, other);
   }
-  public GameObject get(String tag) {
+  public final GameObject get(String tag) {
     return this.gameObjects.get(tag);
   }
 
-  public GameObject getCamera() {
+  public final GameObject getCamera() {
     return this.camera;
   }
 
-  public String getTag(){
+  public final String getTag(){
     return this.tag;
   }
 
-  public boolean setCamera(GameObject camera) {
+  public final boolean setCamera(GameObject camera) {
     if(camera.getComponent(Camera3D.class) != null && this.gameObjects.containsValue(camera)) {
       this.camera = camera;
       return true;
@@ -49,19 +55,19 @@ public final class Scene implements Updatable, Renderable {
     return false;
   }
 
-  public void setTag(String tag) {
+  public final void setTag(String tag) {
     this.tag = tag;
   }
 
   @Override
-  public void update() {
+  public final void update() {
     for(GameObject gameObject : this.gameObjects.values()) {
       if(gameObject.isActive()) gameObject.update();
     }
   }
   
   @Override
-  public void render() {
+  public final void render() {
     Raylib.Camera3D cam = this.camera != null ? this.camera.getComponent(Camera3D.class).unwrap() : null;
 
     for(GameObject gameObject : this.gameObjects.values()) {

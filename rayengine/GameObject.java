@@ -5,8 +5,7 @@ import java.util.List;
 
 import rayengine.components.Transform;
 
-
-public final class GameObject implements Updatable {
+public class GameObject implements Updatable {
   private List<Component> components;
   private Scene parentScene;
   private Transform transform;
@@ -21,38 +20,38 @@ public final class GameObject implements Updatable {
     this.tag = tag;
   }
 
-  public <T extends Component> 
+  public final <T extends Component> 
   T attach(T component) {
     this.components.add(component);
     return component;
   }
 
-  public <T extends Component> 
+  public final <T extends Component> 
   boolean detach(T component) {
     return this.components.remove(component);
   }
 
-  public boolean isActive() {
+  public final boolean isActive() {
     return this.active;
   }
 
-  public String getTag() {
+  public final String getTag() {
     return this.tag;
   }
 
-  public Transform getTransform() {
+  public final Transform getTransform() {
     return this.transform;
   }
 
-  public Scene getParentScene() {
+  public final Scene getParentScene() {
     return this.parentScene;
   }
 
-  public void setActive(boolean active) {
+  public final void setActive(boolean active) {
     this.active = active;
   }
 
-  public <T extends Component> 
+  public final <T extends Component> 
   T getComponent(Class<T> type) {
     for(Component component : this.components) {
       if(type.isInstance(component)) {
@@ -63,7 +62,7 @@ public final class GameObject implements Updatable {
     return null;
   }
 
-  public <T extends Component> 
+  public final <T extends Component> 
   List<T> getComponents(Class<T> type) {
     return this
     .components
@@ -73,16 +72,16 @@ public final class GameObject implements Updatable {
     .toList();
   }
 
-  public List<Component> getComponents() {
+  public final List<Component> getComponents() {
     return List.copyOf(this.components);
   }
 
-  public void setTag(String tag) {
+  public final void setTag(String tag) {
     this.tag = tag;
   }
 
   @Override 
-  public void update() {
+  public final void update() {
     if(!this.active) return;
     for(Component component : this.components) {
       if(component instanceof Updatable updatable && component.isActive()) {

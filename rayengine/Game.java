@@ -1,5 +1,6 @@
 package rayengine;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.raylib.Raylib;
@@ -11,23 +12,37 @@ public class Game {
 
   public Game(String name, List<Scene> scenes, Scene activeScene) {
     this.name = name;
-    this.scenes = scenes;
+    this.scenes = new ArrayList<>(scenes);
     this.activeScene = activeScene;
   }
 
-  public String getName() {
+  public final String getName() {
     return this.name;
   }
 
-  public List<Scene> getScenes() {
+  public final <T extends Scene>
+  T addScene(T scene) {
+    this.scenes.add(scene);
+    return scene;
+  }
+
+  public final List<Scene> getScenes() {
     return this.scenes;
   }
+
+  public final Scene getScene(String tag) {
+    for(Scene scene : this.scenes) {
+      if(scene.getTag().equals(tag)) return scene;
+    }
+
+    return null;
+  }
   
-  public Scene getActiveScene() {
+  public final Scene getActiveScene() {
     return this.activeScene;
   }
 
-  public void setActiveScene(Scene activeScene) {
+  public final void setActiveScene(Scene activeScene) {
     this.activeScene = activeScene;
   }
 
@@ -43,7 +58,7 @@ public class Game {
     Raylib.CloseAudioDevice();
   }
   
-  public void run() {
+  public final void run() {
     while(!Raylib.WindowShouldClose()) {
       if(this.activeScene != null)
         activeScene.update();
