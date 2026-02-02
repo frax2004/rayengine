@@ -2,13 +2,14 @@ package gum.gui;
 
 import com.raylib.Raylib;
 
-import rayengine.Builder;
-import rayengine.Font;
 import rayengine.Game;
-import rayengine.GameObject;
+import rayengine.assets.Font;
+import rayengine.assets.Texture;
 import rayengine.AssetManager;
-import rayengine.Texture;
 import rayengine.components.UI;
+import rayengine.core.Builder;
+import rayengine.core.Color;
+import rayengine.core.GameObject;
 import rayengine.ui.ButtonBuilder;
 import rayengine.ui.Canvas;
 import rayengine.ui.Direction;
@@ -41,7 +42,7 @@ public class MainMenuGUIBuilder implements Builder<UI> {
     builder
     .setParent(buttons)
     .setFont(font)
-    .setForeground(Raylib.GetColor(0xFFD700FF))
+    .setForeground(new Color(255, 215, 0))
     .setTexture(btn)
     .setFontScale(.5f)
     .setOnHoverEnter((sender) -> {

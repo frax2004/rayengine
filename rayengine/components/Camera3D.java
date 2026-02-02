@@ -3,10 +3,10 @@ package rayengine.components;
 
 import com.raylib.Raylib;
 
-import rayengine.Component;
-import rayengine.GameObject;
-import rayengine.Updatable;
-import rayengine.Vector3;
+import rayengine.core.Component;
+import rayengine.core.GameObject;
+import rayengine.core.Updatable;
+import rayengine.core.Vector3;
 
 public final class Camera3D extends Component implements Updatable {
 

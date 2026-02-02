@@ -3,7 +3,9 @@ package rayengine.ui;
 
 import java.util.Arrays;
 
-import rayengine.Vector2;
+import rayengine.core.Vector2;
+import rayengine.ui.core.Layout;
+import rayengine.ui.core.Widget;
 
 public final class StackLayout extends Layout {
 

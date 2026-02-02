@@ -1,15 +1,19 @@
 package rayengine.ui;
 
+import static rayengine.utility.Console.println;
+
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import com.raylib.Raylib;
-import com.raylib.Raylib.Color;
 
-import rayengine.Font;
-import rayengine.Rectangle;
-import rayengine.Texture;
-import rayengine.Vector2;
+import rayengine.assets.Font;
+import rayengine.assets.Texture;
+import rayengine.core.Color;
+import rayengine.core.Rectangle;
+import rayengine.core.Vector2;
+import rayengine.ui.core.StatefullWidget;
+import rayengine.ui.core.Widget;
 
 public final class Button extends StatefullWidget {
 
@@ -30,8 +34,8 @@ public final class Button extends StatefullWidget {
     this(
       parent,
       null,
-      Raylib.GetColor(0x2f2f2fff),
-      Raylib.GetColor(0xffffffff),
+      Color.from(0x2f2f2fff),
+      Color.WHITE,
       "",
       null,
       (sender, btn) -> {},
@@ -223,7 +227,7 @@ public final class Button extends StatefullWidget {
         0.f,
         Raylib.GetColor(0xffffffff)
       );
-    } else Raylib.DrawRectangleRec(dest, this.color);
+    } else Raylib.DrawRectangleRec(dest, this.color.unwrap());
 
     final Raylib.Font font = this.font != null ? this.font.unwrap() : Raylib.GetFontDefault();
     final float fontSize = Button.getFitFontSize(font, text, dest.width(), dest.height())*fontScale;
@@ -233,14 +237,16 @@ public final class Button extends StatefullWidget {
       dest.x() + 0.5f*(dest.width() - textSize.x()),
       dest.y() + 0.5f*(dest.height() - textSize.y())
     ).unwrap();
+    
 
+    println("%s", this.foreground);
     Raylib.DrawTextEx(
       font,
       text,
       textPosition,
       fontSize,
       spacing,
-      this.foreground
+      this.foreground.unwrap()
     );
   }
   

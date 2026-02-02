@@ -10,8 +10,14 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import rayengine.assets.Font;
+import rayengine.assets.Model;
+import rayengine.assets.Music;
+import rayengine.assets.Texture;
+import rayengine.core.Asset;
+
 public final class AssetManager {
-  private static Map<String, Asset<?>> resources = new HashMap<>();
+  private final static Map<String, Asset<?>> resources = new HashMap<>();
   
   private static Stream<File> getFiles(File directory, String... excludePaths) {
     Predicate<File> included = Arrays

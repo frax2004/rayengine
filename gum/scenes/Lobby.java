@@ -4,21 +4,21 @@ import java.util.List;
 
 import com.raylib.Raylib;
 
-import gum.Animate;
-import gum.PlanetSelectionScript;
-import gum.RotateScript;
+import gum.scripts.Animate;
+import gum.scripts.PlanetSelectionScript;
+import gum.scripts.RotateScript;
 import rayengine.Game;
-import rayengine.GameObject;
-import rayengine.Model;
 import rayengine.AssetManager;
-import rayengine.Scene;
-import rayengine.Texture;
-import rayengine.Vector2;
-import rayengine.Vector3;
+import rayengine.assets.Model;
+import rayengine.assets.Texture;
 import rayengine.components.Camera3D;
 import rayengine.components.ModelRenderer;
 import rayengine.components.Transform;
 import rayengine.components.UI;
+import rayengine.core.GameObject;
+import rayengine.core.Scene;
+import rayengine.core.Vector2;
+import rayengine.core.Vector3;
 import rayengine.ui.Canvas;
 
 public class Lobby extends Scene {

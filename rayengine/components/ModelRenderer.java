@@ -2,10 +2,10 @@ package rayengine.components;
 
 import com.raylib.Raylib;
 
-import rayengine.Component;
-import rayengine.GameObject;
-import rayengine.Model;
-import rayengine.Renderable3D;
+import rayengine.assets.Model;
+import rayengine.core.Component;
+import rayengine.core.GameObject;
+import rayengine.core.Renderable3D;
 
 public final class ModelRenderer extends Component implements Renderable3D {
   private Model model = null;

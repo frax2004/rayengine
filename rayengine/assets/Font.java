@@ -1,6 +1,8 @@
-package rayengine;
+package rayengine.assets;
 
 import com.raylib.Raylib;
+
+import rayengine.core.Asset;
 
 public final class Font implements Asset<Raylib.Font> {
   private Raylib.Font font;

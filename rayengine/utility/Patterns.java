@@ -1,4 +1,4 @@
-package rayengine;
+package rayengine.utility;
 
 import java.util.ArrayList;
 import java.util.List;

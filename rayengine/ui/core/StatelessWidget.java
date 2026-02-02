@@ -1,4 +1,4 @@
-package rayengine.ui;
+package rayengine.ui.core;
 
 public abstract class StatelessWidget extends Widget {
 

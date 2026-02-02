@@ -2,9 +2,9 @@ package rayengine.components;
 
 import com.raylib.Raylib;
 
-import rayengine.Component;
-import rayengine.GameObject;
-import rayengine.Updatable;
+import rayengine.core.Component;
+import rayengine.core.GameObject;
+import rayengine.core.Updatable;
 
 public abstract class Script extends Component implements Updatable {
 

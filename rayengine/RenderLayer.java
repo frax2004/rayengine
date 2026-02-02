@@ -3,6 +3,8 @@ package rayengine;
 import java.util.ArrayList;
 import java.util.List;
 
+import rayengine.core.Renderable;
+
 public final class RenderLayer implements Renderable {
   
   private List<Renderable> renderables;

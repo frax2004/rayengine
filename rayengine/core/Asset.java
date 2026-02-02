@@ -1,4 +1,4 @@
-package rayengine;
+package rayengine.core;
 
 public interface Asset<T> {
   public boolean isLoaded();

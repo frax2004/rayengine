@@ -3,9 +3,11 @@ package rayengine.ui;
 
 import com.raylib.Raylib;
 
-import rayengine.Rectangle;
-import rayengine.Texture;
-import rayengine.Vector2;
+import rayengine.assets.Texture;
+import rayengine.core.Rectangle;
+import rayengine.core.Vector2;
+import rayengine.ui.core.StatelessWidget;
+import rayengine.ui.core.Widget;
 
 public final class Canvas extends StatelessWidget {
   private Vector2 srcPosition;

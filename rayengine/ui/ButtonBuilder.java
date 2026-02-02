@@ -3,18 +3,17 @@ package rayengine.ui;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import com.raylib.Raylib;
-import com.raylib.Raylib.Color;
-
-import rayengine.Builder;
-import rayengine.Font;
-import rayengine.Texture;
+import rayengine.assets.Font;
+import rayengine.assets.Texture;
+import rayengine.core.Builder;
+import rayengine.core.Color;
+import rayengine.ui.core.Widget;
 
 public final class ButtonBuilder implements Builder<Button> {
   private Widget parent = null;
   private Texture texture = null;
-  private Color color = Raylib.GetColor(0x2f2f2fff);
-  private Color foreground = Raylib.GetColor(0xffffffff);
+  private Color color = Color.from(0x2f2f2fff);
+  private Color foreground = Color.from(0xffffffff);
   private String text = "";
   private Font font = null;
   private BiConsumer<Button, Integer> onMouseButtonPressed = (sender, btn) -> {};

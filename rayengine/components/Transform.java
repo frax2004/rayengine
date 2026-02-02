@@ -1,8 +1,8 @@
 package rayengine.components;
 
-import rayengine.Component;
-import rayengine.GameObject;
-import rayengine.Vector3;
+import rayengine.core.Component;
+import rayengine.core.GameObject;
+import rayengine.core.Vector3;
 
 public final class Transform extends Component {
   private Vector3 position;

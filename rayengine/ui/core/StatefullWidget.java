@@ -1,6 +1,6 @@
-package rayengine.ui;
+package rayengine.ui.core;
 
-import rayengine.Updatable;
+import rayengine.core.Updatable;
 
 public abstract class StatefullWidget extends Widget implements Updatable {
 

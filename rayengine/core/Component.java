@@ -1,4 +1,4 @@
-package rayengine;
+package rayengine.core;
 
 public abstract class Component {
   private final GameObject parent;
@@ -8,7 +8,7 @@ public abstract class Component {
     this.parent = parent;
     this.active = true;
   }
-
+  
   public final boolean isActive() {
     return this.active;
   }
@@ -20,4 +20,5 @@ public abstract class Component {
   public final GameObject getParent() {
     return parent;
   }
+
 }

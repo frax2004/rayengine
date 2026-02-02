@@ -1,10 +1,11 @@
-package rayengine;
+package rayengine.core;
 
 import java.util.Map;
 import java.util.TreeMap;
 
 import com.raylib.Raylib;
 
+import rayengine.Game;
 import rayengine.components.Camera3D;
 
 public class Scene implements Updatable, Renderable {

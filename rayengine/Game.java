@@ -1,11 +1,13 @@
 package rayengine;
 
-import static rayengine.Console.println;
+import static rayengine.utility.Console.println;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.raylib.Raylib;
+
+import rayengine.core.Scene;
 
 public class Game {
   private final String name;

@@ -1,16 +1,16 @@
 package gum.scenes;
 
-import gum.Animate;
 import gum.gui.MainMenuGUIBuilder;
+import gum.scripts.Animate;
 import rayengine.Game;
-import rayengine.GameObject;
-import rayengine.Music;
 import rayengine.AssetManager;
-import rayengine.Scene;
-import rayengine.Texture;
-import rayengine.Vector2;
+import rayengine.assets.Music;
+import rayengine.assets.Texture;
 import rayengine.components.MusicPlayer;
 import rayengine.components.UI;
+import rayengine.core.GameObject;
+import rayengine.core.Scene;
+import rayengine.core.Vector2;
 import rayengine.ui.Canvas;
 
 public class MainMenu extends Scene {

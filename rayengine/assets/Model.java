@@ -1,6 +1,8 @@
-package rayengine;
+package rayengine.assets;
 
 import com.raylib.Raylib;
+
+import rayengine.core.Asset;
 
 
 public final class Model implements Asset<Raylib.Model> {

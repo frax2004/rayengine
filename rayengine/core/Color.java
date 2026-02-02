@@ -1,4 +1,4 @@
-package rayengine;
+package rayengine.core;
 
 import com.raylib.Raylib;
 
@@ -7,6 +7,8 @@ public final class Color {
   public byte green;
   public byte blue;
   public byte alpha;
+
+  public final static Color WHITE = new Color(255, 255, 255, 255);
 
   public Color(Raylib.Color color) {
     this.red = color.r();
@@ -58,12 +60,22 @@ public final class Color {
   }
 
   public Raylib.Color unwrap() {
-    return Raylib.GetColor(this.toInteger());
+    return Raylib
+    .GetColor(0xffffffff)
+    .r(this.red)
+    .g(this.green)
+    .b(this.blue)
+    .a(this.alpha);
   }
 
   @Override
   public String toString() {
-    return "[%d, %d, %d, %d]".formatted((int)this.red, (int)this.green, (int)this.blue, (int)this.alpha);
+    return "[%d, %d, %d, %d]".formatted(
+      Byte.toUnsignedInt(this.red), 
+      Byte.toUnsignedInt(this.green), 
+      Byte.toUnsignedInt(this.blue), 
+      Byte.toUnsignedInt(this.alpha)
+    );
   }
 
 }

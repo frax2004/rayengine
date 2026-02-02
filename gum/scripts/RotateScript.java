@@ -1,10 +1,10 @@
-package gum;
+package gum.scripts;
 
 import java.util.Random;
 
-import rayengine.GameObject;
-import rayengine.Vector3;
 import rayengine.components.Script;
+import rayengine.core.GameObject;
+import rayengine.core.Vector3;
 
 public class RotateScript extends Script {
   private float theta = 0;

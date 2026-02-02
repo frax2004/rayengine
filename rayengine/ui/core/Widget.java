@@ -1,7 +1,7 @@
-package rayengine.ui;
+package rayengine.ui.core;
 
-import rayengine.Renderable2D;
-import rayengine.Vector2;
+import rayengine.core.Renderable2D;
+import rayengine.core.Vector2;
 
 public abstract class Widget implements Renderable2D {
   private Widget parent;

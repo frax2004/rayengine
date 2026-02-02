@@ -1,6 +1,8 @@
-package rayengine;
+package rayengine.assets;
 
 import com.raylib.Raylib;
+
+import rayengine.core.Asset;
 
 public class Texture implements Asset<Raylib.Texture> {
   private Raylib.Texture texture = null;
