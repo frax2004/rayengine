@@ -1,5 +1,7 @@
 package rayengine;
 
+import static rayengine.Console.println;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +61,14 @@ public class Game {
     Raylib.SetTargetFPS(60);
   }
 
+  public static void loadAssets(String folderPath, String... toExclude) {
+    println("----------------- Loading assets ------------------");
+    AssetManager.loadAssets(folderPath, toExclude);
+    println("---------------------------------------------------");
+  }
+
   public static void shutdown() {
+    AssetManager.releaseAll();
     Raylib.CloseWindow();
     Raylib.CloseAudioDevice();
   }

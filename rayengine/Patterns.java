@@ -6,18 +6,14 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public final class Patterns {
+public interface Patterns {
 
-  private static Patterns instance = new Patterns();
-  
-  private Patterns() {}
-
-  private class Match<T> {
+  public static final class Match<T> {
     private T pattern;
     private List<Predicate<T>> filters;
     private List<Function<? super T, ?>> mappers;
 
-    public Match(T pattern) {
+    private Match(T pattern) {
       this.pattern = pattern;
       this.filters = new ArrayList<>();
     }
@@ -64,22 +60,6 @@ public final class Patterns {
   }
 
   public static <T> Match<T> match(T pattern) {
-    return Patterns.instance.new Match<>(pattern);
-  }
-  
-  private enum Color {
-    RED, GREEN, BLUE;
-  }
-  
-  void use() {
-    Color color = Color.RED;
-
-    String name = Patterns.match(color)
-    .with(Color.RED::equals   , c -> "red"     )
-    .with(Color.GREEN::equals , c -> "green"   )
-    .with(Color.BLUE::equals  , c -> "blue"    )
-    .with(i -> true           , c -> "unknown" )
-    .orElse(String.class, "");
-
+    return new Match<>(pattern);
   }
 }
