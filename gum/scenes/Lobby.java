@@ -10,7 +10,7 @@ import gum.RotateScript;
 import rayengine.Game;
 import rayengine.GameObject;
 import rayengine.Model;
-import rayengine.ResourceManager;
+import rayengine.AssetManager;
 import rayengine.Scene;
 import rayengine.Texture;
 import rayengine.Vector2;
@@ -22,22 +22,20 @@ import rayengine.components.UI;
 import rayengine.ui.Canvas;
 
 public class Lobby extends Scene {
-  private final ResourceManager rm;
 
-  public Lobby(Game game, ResourceManager rm) {
+  public Lobby(Game game) {
     super(game, "Lobby");
-    this.rm = rm;
 
-    Texture parallax = this.rm.get(Texture.class, "assets/textures/background.png");
-    Texture stars = this.rm.get(Texture.class, "assets/textures/stars.png");
-    Model sun = this.rm.get(Model.class, "assets/models/sun.obj");
+    Texture parallax = AssetManager.get(Texture.class, "assets/textures/background.png");
+    Texture stars = AssetManager.get(Texture.class, "assets/textures/stars.png");
+    Model sun = AssetManager.get(Model.class, "assets/models/sun.obj");
 
     List<Model> planets = List.of(
-      this.rm.get(Model.class, "assets/models/rocksy.obj"),
-      this.rm.get(Model.class, "assets/models/groover.obj"),
-      this.rm.get(Model.class, "assets/models/mars.obj"),
-      this.rm.get(Model.class, "assets/models/earth.obj"),
-      this.rm.get(Model.class, "assets/models/neptune.obj")
+      AssetManager.get(Model.class, "assets/models/rocksy.obj"),
+      AssetManager.get(Model.class, "assets/models/groover.obj"),
+      AssetManager.get(Model.class, "assets/models/mars.obj"),
+      AssetManager.get(Model.class, "assets/models/earth.obj"),
+      AssetManager.get(Model.class, "assets/models/neptune.obj")
     );
 
     GameObject bg = new GameObject(this, "background");

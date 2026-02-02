@@ -1,29 +1,18 @@
 package gum;
 
-import java.util.List;
-
 import gum.scenes.Lobby;
 import gum.scenes.MainMenu;
 import rayengine.Game;
-import rayengine.ResourceManager;
-import rayengine.Scene;
 
 
 public final class GUM extends Game {
-  private final ResourceManager rm;
 
-  public GUM(ResourceManager rm) {
-    super(
-      "G.U.M. (Galactic Unemployed Mercenaries)",
-      List.of(), 
-      null
-    );
+  public GUM() {
+    super("G.U.M. (Galactic Unemployed Mercenaries)");
 
-    this.rm = rm;
+    this.addScene(new MainMenu(this));
+    this.addScene(new Lobby(this));
 
-    Scene mainMenu = this.addScene(new MainMenu(this, this.rm));
-    this.addScene(new Lobby(this, this.rm));
-    
-    this.setActiveScene(mainMenu);
+    this.setActiveScene(this.getScene("Main Menu"));
   }
 }

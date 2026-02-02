@@ -6,7 +6,7 @@ import rayengine.Builder;
 import rayengine.Font;
 import rayengine.Game;
 import rayengine.GameObject;
-import rayengine.ResourceManager;
+import rayengine.AssetManager;
 import rayengine.Texture;
 import rayengine.components.UI;
 import rayengine.ui.ButtonBuilder;
@@ -16,21 +16,18 @@ import rayengine.ui.Margin;
 import rayengine.ui.StackLayout;
 
 public class MainMenuGUIBuilder implements Builder<UI> {
-
-  private final ResourceManager rm;
   private final GameObject parent;
 
-  public MainMenuGUIBuilder(GameObject parent, ResourceManager rm) {
-    this.rm = rm;
+  public MainMenuGUIBuilder(GameObject parent) {
     this.parent = parent;
   }
 
   @Override
   public UI build() {
     
-    Texture texture = this.rm.get(Texture.class, "assets/textures/titlescreen.png");
-    Texture btn = this.rm.get(Texture.class, "assets/textures/button.png");
-    Font font = this.rm.get(Font.class, "assets/fonts/impact.ttf");
+    Texture texture = AssetManager.get(Texture.class, "assets/textures/titlescreen.png");
+    Texture btn = AssetManager.get(Texture.class, "assets/textures/button.png");
+    Font font = AssetManager.get(Font.class, "assets/fonts/impact.ttf");
 
     StackLayout layout = new StackLayout(null, Direction.HORIZONTAL);
     layout.setHorizontalMargin(.5f);

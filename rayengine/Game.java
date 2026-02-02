@@ -10,6 +10,12 @@ public class Game {
   private List<Scene> scenes;
   private Scene activeScene;
 
+  public Game(String name) {
+    this.name = name;
+    this.scenes = new ArrayList<>();
+    this.activeScene = null;
+  }
+
   public Game(String name, List<Scene> scenes, Scene activeScene) {
     this.name = name;
     this.scenes = new ArrayList<>(scenes);
