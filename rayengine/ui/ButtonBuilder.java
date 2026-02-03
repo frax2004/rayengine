@@ -3,11 +3,10 @@ package rayengine.ui;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import rayengine.assets.Font;
-import rayengine.assets.Texture;
 import rayengine.core.Builder;
 import rayengine.core.Color;
-import rayengine.ui.core.Widget;
+import rayengine.core.Font;
+import rayengine.core.Texture;
 
 public final class ButtonBuilder implements Builder<Button> {
   private Widget parent = null;

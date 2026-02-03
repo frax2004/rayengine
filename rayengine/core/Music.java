@@ -1,8 +1,6 @@
-package rayengine.assets;
+package rayengine.core;
 
 import com.raylib.Raylib;
-
-import rayengine.core.Asset;
 
 public final class Music implements Asset<Raylib.Music> {
   private final Raylib.Music music;

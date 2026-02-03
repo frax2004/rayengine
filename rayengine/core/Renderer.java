@@ -1,11 +1,8 @@
 package rayengine.core;
 
-import rayengine.assets.Font;
-import rayengine.assets.Model;
-import rayengine.assets.Texture;
-import rayengine.components.Camera3D;
+import rayengine.core.components.Camera3D;
 
-public interface RenderContext {
+public interface Renderer {
   public Vector2 getRenderSize();
   public Vector2 getTextSize(Font font, String text, float fontSize, float spacing);
   public Rectangle getScissorRectangle();

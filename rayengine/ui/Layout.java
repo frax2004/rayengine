@@ -1,4 +1,4 @@
-package rayengine.ui.core;
+package rayengine.ui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import rayengine.core.Vector2;
-import rayengine.ui.Margin;
 
 public abstract class Layout extends StatefullWidget {
   private List<Widget> children = new ArrayList<>();

@@ -2,9 +2,9 @@ package gum.scripts;
 
 import com.raylib.Raylib;
 
-import rayengine.components.Script;
 import rayengine.core.GameObject;
 import rayengine.core.Vector2;
+import rayengine.core.components.Script;
 import rayengine.ui.Canvas;
 
 public class Animate extends Script {

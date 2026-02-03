@@ -1,13 +1,13 @@
 package gum.scripts;
 
-import static rayengine.utility.Console.println;
+import static rayengine.Console.println;
 
 import gum.scenes.Lobby;
 import gum.scenes.MainMenu;
 import rayengine.AssetManager;
 import rayengine.Game;
-import rayengine.components.Script;
 import rayengine.core.GameObject;
+import rayengine.core.components.Script;
 
 public final class LoaderScript extends Script {
 

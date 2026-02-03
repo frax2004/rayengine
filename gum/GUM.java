@@ -2,10 +2,10 @@ package gum;
 import gum.scenes.LoadingScreen;
 import rayengine.AssetManager;
 import rayengine.Game;
+import rayengine.RaylibRenderer;
 import rayengine.core.Core;
 import rayengine.core.Settings;
 import rayengine.core.Vector2;
-import rayengine.rendercontexts.RaylibRenderContext;
 
 
 public final class GUM extends Game {
@@ -23,7 +23,7 @@ public final class GUM extends Game {
         "G.U.M. (Galactic Unemployed Mercenaries)",
         new Vector2(1200, 800),
         60,
-        new RaylibRenderContext()
+        new RaylibRenderer()
       )
     );
 

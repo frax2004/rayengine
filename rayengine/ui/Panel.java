@@ -3,10 +3,8 @@ package rayengine.ui;
 import rayengine.core.Color;
 import rayengine.core.Core;
 import rayengine.core.Rectangle;
-import rayengine.core.RenderContext;
+import rayengine.core.Renderer;
 import rayengine.core.Vector2;
-import rayengine.ui.core.StatelessWidget;
-import rayengine.ui.core.Widget;
 
 public final class Panel extends StatelessWidget {
   private Color color;
@@ -26,7 +24,7 @@ public final class Panel extends StatelessWidget {
 
   @Override
   public void render() {
-    final RenderContext ctx = Core.getRenderContext();
+    final Renderer ctx = Core.getRenderContext();
     final Vector2 position = this.getPosition();
     final Vector2 size = this.getSize();
 

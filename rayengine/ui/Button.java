@@ -5,15 +5,13 @@ import java.util.function.Consumer;
 
 import com.raylib.Raylib;
 
-import rayengine.assets.Font;
-import rayengine.assets.Texture;
 import rayengine.core.Color;
 import rayengine.core.Core;
+import rayengine.core.Font;
 import rayengine.core.Rectangle;
-import rayengine.core.RenderContext;
+import rayengine.core.Renderer;
+import rayengine.core.Texture;
 import rayengine.core.Vector2;
-import rayengine.ui.core.StatefullWidget;
-import rayengine.ui.core.Widget;
 
 public final class Button extends StatefullWidget {
   private Texture texture;
@@ -180,7 +178,7 @@ public final class Button extends StatefullWidget {
     this.onHover.accept(this);
   }
 
-  private static float getFitFontSize(RenderContext ctx, Font font, String text, float maxWidth, float maxHeight) {
+  private static float getFitFontSize(Renderer ctx, Font font, String text, float maxWidth, float maxHeight) {
     if (text == null || text.isEmpty()) return 10.0f;
 
     final float referenceFontSize = 100.0f;
@@ -198,7 +196,7 @@ public final class Button extends StatefullWidget {
 
   @Override
   public void render() {
-    final RenderContext ctx = Core.getRenderContext();
+    final Renderer ctx = Core.getRenderContext();
     
     final Rectangle dest = new Rectangle(this.getPosition(), this.getSize());
 

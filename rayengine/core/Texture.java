@@ -1,9 +1,6 @@
-package rayengine.assets;
+package rayengine.core;
 
 import com.raylib.Raylib;
-
-import rayengine.core.Asset;
-import rayengine.core.Vector2;
 
 public final class Texture implements Asset<Raylib.Texture> {
   private final Raylib.Texture texture;

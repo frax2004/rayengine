@@ -4,15 +4,15 @@ import gum.scripts.Animate;
 import gum.scripts.LoaderScript;
 import rayengine.AssetManager;
 import rayengine.Game;
-import rayengine.assets.Texture;
-import rayengine.components.UI;
 import rayengine.core.GameObject;
 import rayengine.core.Scene;
+import rayengine.core.Texture;
 import rayengine.core.Vector2;
+import rayengine.core.components.UI;
 import rayengine.ui.Canvas;
 import rayengine.ui.Direction;
 import rayengine.ui.StackLayout;
-import rayengine.ui.core.Widget;
+import rayengine.ui.Widget;
 
 public final class LoadingScreen extends Scene {
 

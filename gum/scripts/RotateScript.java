@@ -2,9 +2,9 @@ package gum.scripts;
 
 import java.util.Random;
 
-import rayengine.components.Script;
 import rayengine.core.GameObject;
 import rayengine.core.Vector3;
+import rayengine.core.components.Script;
 
 public class RotateScript extends Script {
   private float theta = 0;

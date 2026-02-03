@@ -9,16 +9,16 @@ import gum.scripts.PlanetSelectionScript;
 import gum.scripts.RotateScript;
 import rayengine.Game;
 import rayengine.AssetManager;
-import rayengine.assets.Model;
-import rayengine.assets.Texture;
-import rayengine.components.Camera3D;
-import rayengine.components.ModelRenderer;
-import rayengine.components.Transform;
-import rayengine.components.UI;
 import rayengine.core.GameObject;
+import rayengine.core.Model;
 import rayengine.core.Scene;
+import rayengine.core.Texture;
 import rayengine.core.Vector2;
 import rayengine.core.Vector3;
+import rayengine.core.components.Camera3D;
+import rayengine.core.components.ModelRenderer;
+import rayengine.core.components.Transform;
+import rayengine.core.components.UI;
 import rayengine.ui.Canvas;
 
 public class Lobby extends Scene {

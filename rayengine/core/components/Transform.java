@@ -1,4 +1,4 @@
-package rayengine.components;
+package rayengine.core.components;
 
 import rayengine.core.Component;
 import rayengine.core.GameObject;

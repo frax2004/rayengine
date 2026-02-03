@@ -1,5 +1,5 @@
 package rayengine.core;
 
 public record Settings(
-  String title, Vector2 windowSize, int fps, RenderContext renderContext
+  String title, Vector2 windowSize, int fps, Renderer renderContext
 ) {}

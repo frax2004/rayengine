@@ -1,4 +1,4 @@
-package rayengine.components;
+package rayengine.core.components;
 
 
 import rayengine.core.Component;
@@ -7,8 +7,8 @@ import rayengine.core.GameObject;
 import rayengine.core.Renderable2D;
 import rayengine.core.Updatable;
 import rayengine.core.Vector2;
-import rayengine.ui.core.StatefullWidget;
-import rayengine.ui.core.Widget;
+import rayengine.ui.StatefullWidget;
+import rayengine.ui.Widget;
 
 public final class UI extends Component implements Updatable, Renderable2D {
 

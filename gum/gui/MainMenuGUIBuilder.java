@@ -3,13 +3,13 @@ package gum.gui;
 import com.raylib.Raylib;
 
 import rayengine.Game;
-import rayengine.assets.Font;
-import rayengine.assets.Texture;
 import rayengine.AssetManager;
-import rayengine.components.UI;
 import rayengine.core.Builder;
 import rayengine.core.Color;
+import rayengine.core.Font;
 import rayengine.core.GameObject;
+import rayengine.core.Texture;
+import rayengine.core.components.UI;
 import rayengine.ui.ButtonBuilder;
 import rayengine.ui.Canvas;
 import rayengine.ui.Direction;

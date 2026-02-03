@@ -1,10 +1,10 @@
-package rayengine.components;
+package rayengine.core.components;
 
 import com.raylib.Raylib;
 
-import rayengine.assets.Music;
 import rayengine.core.Component;
 import rayengine.core.GameObject;
+import rayengine.core.Music;
 import rayengine.core.Updatable;
 
 public final class MusicPlayer extends Component implements Updatable {

@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import rayengine.Game;
-import rayengine.components.Camera3D;
+import rayengine.core.components.Camera3D;
 
 
 public class Scene implements Updatable, Renderable {
@@ -73,7 +73,7 @@ public class Scene implements Updatable, Renderable {
   
   @Override
   public final void render() {
-    RenderContext ctx = Core.getRenderContext();
+    Renderer ctx = Core.getRenderContext();
 
     Camera3D cam = this.camera != null ? this.camera.getComponent(Camera3D.class) : null;
     

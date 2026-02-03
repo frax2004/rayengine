@@ -1,11 +1,11 @@
-package rayengine.components;
+package rayengine.core.components;
 
-import rayengine.assets.Model;
 import rayengine.core.Color;
 import rayengine.core.Component;
 import rayengine.core.Core;
 import rayengine.core.GameObject;
-import rayengine.core.RenderContext;
+import rayengine.core.Model;
+import rayengine.core.Renderer;
 import rayengine.core.Renderable3D;
 
 public final class ModelRenderer extends Component implements Renderable3D {
@@ -28,7 +28,7 @@ public final class ModelRenderer extends Component implements Renderable3D {
   public void render() {
     if(this.model == null) return;
 
-    RenderContext ctx = Core.getRenderContext();
+    Renderer ctx = Core.getRenderContext();
     Transform transform = this.getParent().getTransform();
 
     ctx.render(

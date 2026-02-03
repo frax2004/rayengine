@@ -4,13 +4,13 @@ import gum.gui.MainMenuGUIBuilder;
 import gum.scripts.Animate;
 import rayengine.Game;
 import rayengine.AssetManager;
-import rayengine.assets.Music;
-import rayengine.assets.Texture;
-import rayengine.components.MusicPlayer;
-import rayengine.components.UI;
 import rayengine.core.GameObject;
+import rayengine.core.Music;
 import rayengine.core.Scene;
+import rayengine.core.Texture;
 import rayengine.core.Vector2;
+import rayengine.core.components.MusicPlayer;
+import rayengine.core.components.UI;
 import rayengine.ui.Canvas;
 
 public class MainMenu extends Scene {

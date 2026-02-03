@@ -1,4 +1,4 @@
-package rayengine.ui.core;
+package rayengine.ui;
 
 import rayengine.core.Updatable;
 

@@ -3,8 +3,8 @@ package rayengine;
 import java.util.ArrayList;
 import java.util.List;
 
-import rayengine.components.Script;
 import rayengine.core.Scene;
+import rayengine.core.components.Script;
 
 public class Game {
   private final String name;

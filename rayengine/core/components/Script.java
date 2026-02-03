@@ -1,4 +1,4 @@
-package rayengine.components;
+package rayengine.core.components;
 
 import com.raylib.Raylib;
 

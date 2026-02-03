@@ -16,7 +16,7 @@ public final class Core {
     return Core.instance.settings.title();
   }
 
-  public static RenderContext getRenderContext() {
+  public static Renderer getRenderContext() {
     return Core.instance.settings.renderContext();
   }
 
@@ -25,7 +25,7 @@ public final class Core {
   }
 
   public static void run(Game game) {
-    RenderContext ctx = Core.instance.settings.renderContext();
+    Renderer ctx = Core.instance.settings.renderContext();
 
     while(!Raylib.WindowShouldClose()) {
       Scene scene = game.getActiveScene();

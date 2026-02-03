@@ -1,4 +1,4 @@
-package rayengine.utility;
+package rayengine;
 
 
 public interface Console {

@@ -1,18 +1,18 @@
-package rayengine.rendercontexts;
+package rayengine;
 
 import com.raylib.Raylib;
 
-import rayengine.assets.Font;
-import rayengine.assets.Model;
-import rayengine.assets.Texture;
-import rayengine.components.Camera3D;
 import rayengine.core.Color;
+import rayengine.core.Font;
+import rayengine.core.Model;
 import rayengine.core.Rectangle;
-import rayengine.core.RenderContext;
+import rayengine.core.Renderer;
+import rayengine.core.Texture;
 import rayengine.core.Vector2;
 import rayengine.core.Vector3;
+import rayengine.core.components.Camera3D;
 
-public final class RaylibRenderContext implements RenderContext {
+public final class RaylibRenderer implements Renderer {
 
   private Camera3D camera = null;
   private Rectangle scissor = null;

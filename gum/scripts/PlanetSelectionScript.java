@@ -1,9 +1,9 @@
 package gum.scripts;
 
 
-import rayengine.components.ModelRenderer;
-import rayengine.components.Script;
 import rayengine.core.GameObject;
+import rayengine.core.components.ModelRenderer;
+import rayengine.core.components.Script;
 
 public final class PlanetSelectionScript extends Script {
   private final ModelRenderer model;

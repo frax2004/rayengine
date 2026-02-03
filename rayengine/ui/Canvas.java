@@ -1,13 +1,11 @@
 package rayengine.ui;
 
-import rayengine.assets.Texture;
 import rayengine.core.Color;
 import rayengine.core.Core;
 import rayengine.core.Rectangle;
-import rayengine.core.RenderContext;
+import rayengine.core.Renderer;
+import rayengine.core.Texture;
 import rayengine.core.Vector2;
-import rayengine.ui.core.StatelessWidget;
-import rayengine.ui.core.Widget;
 
 public final class Canvas extends StatelessWidget {
   private Vector2 srcPosition;
@@ -75,7 +73,7 @@ public final class Canvas extends StatelessWidget {
 
   @Override
   public void render() {
-    final RenderContext ctx = Core.getRenderContext();
+    final Renderer ctx = Core.getRenderContext();
     final Vector2 textureSize = this.texture != null ? this.texture.getSize() : Vector2.ZERO;
     
     final Rectangle source = new Rectangle(

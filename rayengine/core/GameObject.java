@@ -3,7 +3,7 @@ package rayengine.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import rayengine.components.Transform;
+import rayengine.core.components.Transform;
 
 public final class GameObject implements Updatable, Renderable {
   private List<Component> components;
