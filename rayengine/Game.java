@@ -1,17 +1,14 @@
 package rayengine;
 
-import static rayengine.utility.Console.println;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import com.raylib.Raylib;
-
+import rayengine.components.Script;
 import rayengine.core.Scene;
 
 public class Game {
   private final String name;
-  private List<Scene> scenes;
+  private final List<Scene> scenes;
   private Scene activeScene;
 
   public Game(String name) {
@@ -54,40 +51,13 @@ public class Game {
 
   public final void setActiveScene(Scene activeScene) {
     this.activeScene = activeScene;
-  }
-
-  public static void initialize(String title) {
-    Raylib.InitAudioDevice();
-    Raylib.SetConfigFlags(Raylib.FLAG_WINDOW_RESIZABLE | Raylib.FLAG_MSAA_4X_HINT | Raylib.FLAG_WINDOW_HIGHDPI | Raylib.FLAG_WINDOW_ALWAYS_RUN);
-    Raylib.InitWindow(1200, 800, title);
-    Raylib.SetTargetFPS(60);
-  }
-
-  public static void loadAssets(String folderPath, String... toExclude) {
-    println("----------------- Loading assets ------------------");
-    AssetManager.loadAssets(folderPath, toExclude);
-    println("---------------------------------------------------");
-  }
-
-  public static void shutdown() {
-    AssetManager.releaseAll();
-    Raylib.CloseWindow();
-    Raylib.CloseAudioDevice();
-  }
-  
-  public final void run() {
-    while(!Raylib.WindowShouldClose()) {
-      if(this.activeScene != null)
-        activeScene.update();
-
-      Raylib.BeginDrawing();
-      Raylib.ClearBackground(Raylib.GetColor(0x000000ff));
-      
-      if(this.activeScene != null)
-        activeScene.render();
-
-      Raylib.EndDrawing();
+    if(this.activeScene != null) {
+      this.activeScene
+      .getGameObjects()
+      .stream()
+      .flatMap(g -> g.getComponents(Script.class).stream())
+      .forEach(Script::start);
     }
-
   }
+
 }

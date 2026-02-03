@@ -1,27 +1,39 @@
 package gum.scenes;
 
-import gum.gui.MainMenuGUIBuilder;
 import gum.scripts.Animate;
-import rayengine.Game;
+import gum.scripts.LoaderScript;
 import rayengine.AssetManager;
-import rayengine.assets.Music;
+import rayengine.Game;
 import rayengine.assets.Texture;
-import rayengine.components.MusicPlayer;
 import rayengine.components.UI;
 import rayengine.core.GameObject;
 import rayengine.core.Scene;
 import rayengine.core.Vector2;
 import rayengine.ui.Canvas;
+import rayengine.ui.Direction;
+import rayengine.ui.StackLayout;
+import rayengine.ui.core.Widget;
 
-public class MainMenu extends Scene {
+public final class LoadingScreen extends Scene {
 
-  public MainMenu(Game game) {
-    super(game, "Main Menu");
+  public static Widget buildUI() {
+    Texture texture = AssetManager.get(Texture.class, "preload/titlescreen.png");
+    StackLayout layout = new StackLayout(null, Direction.VERTICAL);
+    layout.setMargins(.15f, .15f, .15f, .15f);
+    layout.add(new Canvas(layout, texture));
 
+    return layout;
+  }
+
+  public LoadingScreen(Game parent) {
+    super(parent, "Loading Screen");
+
+    GameObject loader = new GameObject(this, "loader");
+    loader.attach(new LoaderScript(loader));
+    this.add(loader);
+    
     Texture parallax = AssetManager.get(Texture.class, "preload/background.png");
     Texture stars = AssetManager.get(Texture.class, "preload/stars.png");
-    Music mainMenuMusic = AssetManager.get(Music.class, "assets/music/interstellar.mp3");
-
 
     GameObject bg = new GameObject(this, "Background");
     Canvas canv = new Canvas(null);
@@ -35,9 +47,7 @@ public class MainMenu extends Scene {
     bg.attach(new UI(bg, canv2));
     
     GameObject title = new GameObject(this, "Title");
-    title.attach(new MainMenuGUIBuilder(title).build());
-    MusicPlayer musicPlayer = title.attach(new MusicPlayer(title, mainMenuMusic));
-    musicPlayer.play();
+    title.attach(new UI(title, LoadingScreen.buildUI()));
     
     this.add(bg);
     this.add(title);

@@ -9,13 +9,14 @@ import java.util.function.Predicate;
 public interface Patterns {
 
   public static final class Match<T> {
-    private T pattern;
-    private List<Predicate<T>> filters;
-    private List<Function<? super T, ?>> mappers;
+    private final T pattern;
+    private final List<Predicate<T>> filters;
+    private final List<Function<? super T, ?>> mappers;
 
     private Match(T pattern) {
       this.pattern = pattern;
       this.filters = new ArrayList<>();
+      this.mappers = new ArrayList<>();
     }
 
     public Match<T> with(Predicate<T> match, Function<? super T, ?> mapper) {
@@ -30,7 +31,8 @@ public interface Patterns {
       return this;
     }
 
-    public <U> Optional<U> get(Class<? extends U> target) {
+    public <U> 
+    Optional<U> get(Class<? extends U> target) {
       for(int i = 0; i < filters.size(); ++i) {
         if(filters.get(i).test(pattern)) 
           return Optional.ofNullable(
@@ -44,7 +46,8 @@ public interface Patterns {
       return Optional.empty();
     }
 
-    public <U> U orElse(Class<? extends U> target, U other) {
+    public <U> 
+    U orElse(Class<? extends U> target, U other) {
       for(int i = 0; i < filters.size(); ++i) {
         if(filters.get(i).test(pattern)) 
           return target
@@ -59,7 +62,8 @@ public interface Patterns {
 
   }
 
-  public static <T> Match<T> match(T pattern) {
+  public static <T> 
+  Match<T> match(T pattern) {
     return new Match<>(pattern);
   }
 }

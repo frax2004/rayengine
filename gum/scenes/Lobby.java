@@ -26,8 +26,8 @@ public class Lobby extends Scene {
   public Lobby(Game game) {
     super(game, "Lobby");
 
-    Texture parallax = AssetManager.get(Texture.class, "assets/textures/background.png");
-    Texture stars = AssetManager.get(Texture.class, "assets/textures/stars.png");
+    Texture parallax = AssetManager.get(Texture.class, "preload/background.png");
+    Texture stars = AssetManager.get(Texture.class, "preload/stars.png");
     Model sun = AssetManager.get(Model.class, "assets/models/sun.obj");
 
     List<Model> planets = List.of(

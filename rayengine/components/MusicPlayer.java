@@ -1,6 +1,5 @@
 package rayengine.components;
 
-
 import com.raylib.Raylib;
 
 import rayengine.assets.Music;
@@ -20,6 +19,7 @@ public final class MusicPlayer extends Component implements Updatable {
     return this.music;
   }
 
+  @Override
   public void update() {
     if(this.isActive() && this.music != null) {
       Raylib.UpdateMusicStream(this.music.unwrap());
@@ -36,6 +36,15 @@ public final class MusicPlayer extends Component implements Updatable {
     if(this.music != null && Raylib.IsMusicStreamPlaying(this.music.unwrap())) {
       Raylib.PauseMusicStream(this.music.unwrap());
     }
+  }
+
+  public void setMusic(Music music) {
+    if(this.isPlaying()) this.stop();
+    this.music = music;
+  }
+
+  public Music getMusic() {
+    return this.music;
   }
 
   public void resume() {

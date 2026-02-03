@@ -10,8 +10,8 @@ import rayengine.core.Vector3;
 
 public final class Camera3D extends Component implements Updatable {
 
+  private final Raylib.Camera3D camera = new Raylib.Camera3D();
   private int cameraMode = 0;
-  private Raylib.Camera3D camera = new Raylib.Camera3D();
 
   public Camera3D(GameObject parent) {
     super(parent);

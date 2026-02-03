@@ -1,18 +1,17 @@
 package rayengine.core;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
-
-import com.raylib.Raylib;
 
 import rayengine.Game;
 import rayengine.components.Camera3D;
 
-public class Scene implements Updatable, Renderable {
 
+public class Scene implements Updatable, Renderable {
   private String tag;
   private GameObject camera;
-  private Map<String, GameObject> gameObjects;
+  private final Map<String, GameObject> gameObjects;
   private final Game parent;
 
   public Scene(Game parent, String tag) {
@@ -33,9 +32,14 @@ public class Scene implements Updatable, Renderable {
     return this.parent;
   }
 
+  public final Collection<GameObject> getGameObjects() {
+    return this.gameObjects.values();
+  }
+
   public final GameObject getOr(String tag, GameObject other)  {
     return this.gameObjects.getOrDefault(tag, other);
   }
+
   public final GameObject get(String tag) {
     return this.gameObjects.get(tag);
   }
@@ -44,7 +48,7 @@ public class Scene implements Updatable, Renderable {
     return this.camera;
   }
 
-  public final String getTag(){
+  public final String getTag() {
     return this.tag;
   }
 
@@ -69,22 +73,15 @@ public class Scene implements Updatable, Renderable {
   
   @Override
   public final void render() {
-    Raylib.Camera3D cam = this.camera != null ? this.camera.getComponent(Camera3D.class).unwrap() : null;
+    RenderContext ctx = Core.getRenderContext();
 
+    Camera3D cam = this.camera != null ? this.camera.getComponent(Camera3D.class) : null;
+    
+    ctx.setCamera(cam);
     for(GameObject gameObject : this.gameObjects.values()) {
-      if(!gameObject.isActive()) continue;
-
-      for(Component component : gameObject.getComponents()) {
-        if(!component.isActive()) continue;
-
-        if(component instanceof Renderable3D renderable && cam != null) {
-          Raylib.BeginMode3D(cam);
-          renderable.render();
-          Raylib.EndMode3D();
-        } else if(component instanceof Renderable2D renderable) renderable.render();
-      }
-
+      if(gameObject.isActive()) gameObject.render();
     }
+    ctx.setCamera(null);
   }
 
 }

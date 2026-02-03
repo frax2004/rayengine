@@ -5,18 +5,18 @@ import com.raylib.Raylib;
 public final class Rectangle {
   public float x, y, width, height;
 
+  public Rectangle() {}
+
+  public Rectangle(Rectangle other) {
+    this(other.x, other.y, other.width, other.height);
+  }
+
   public Rectangle(Raylib.Rectangle rect) {
-    this.x = rect.x();
-    this.y = rect.y();
-    this.width = rect.width();
-    this.height = rect.height();
+    this(rect.x(), rect.y(), rect.width(), rect.height());
   }
 
   public Rectangle(Vector2 position, Vector2 size) {
-    this.x = position.x;
-    this.y = position.y;
-    this.width = size.x;
-    this.height = size.y;
+    this(position.x, position.y, size.x, size.y);
   }
 
   public Rectangle(float x, float y, float width, float height) {

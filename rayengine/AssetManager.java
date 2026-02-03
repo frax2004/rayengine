@@ -38,17 +38,17 @@ public final class AssetManager {
   }
 
   public static void loadAssets(String folderPath, String... excludePaths) {
-    List<String> extensions = List.of(".mp3", ".ttf", ".png", ".obj");
+    final List<String> extensions = List.of(".mp3", ".ttf", ".png", ".obj");
 
-    String[] paths = AssetManager
+    final String[] paths = AssetManager
     .getFiles(new File(folderPath), excludePaths)
     .map(File::getPath)
     .filter(path -> extensions.contains(path.substring(path.lastIndexOf('.')).toLowerCase()))
     .toArray(String[]::new);
 
     for(String path : paths) {
-      String key = path.replace("\\", "/");
-      Asset<?> value = switch(path.substring(path.lastIndexOf('.')).toLowerCase()) {
+      final String key = path.replace("\\", "/");
+      final Asset<?> value = switch(path.substring(path.lastIndexOf('.')).toLowerCase()) {
         case ".mp3" -> new Music(path);
         case ".ttf" -> new Font(path);
         case ".png" -> new Texture(path);

@@ -18,7 +18,7 @@ public class RotateScript extends Script {
   }
 
   @Override
-  protected void OnUpdate(float deltaTime) {
+  public void update(float deltaTime) {
     this.theta += deltaTime*(1/this.rho)*2;
     this.getParent()
     .getTransform()

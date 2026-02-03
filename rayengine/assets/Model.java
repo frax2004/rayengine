@@ -6,7 +6,7 @@ import rayengine.core.Asset;
 
 
 public final class Model implements Asset<Raylib.Model> {
-  private Raylib.Model model = null;
+  private final Raylib.Model model;
   
   public Model(String path) {
     this.model = Raylib.LoadModel(path);
@@ -15,7 +15,6 @@ public final class Model implements Asset<Raylib.Model> {
   @Override
   public void release() {
     Raylib.UnloadModel(this.model);
-    this.model = null;
   }
 
   @Override

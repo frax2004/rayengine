@@ -1,7 +1,11 @@
 package gum;
-import gum.scenes.Lobby;
-import gum.scenes.MainMenu;
+import gum.scenes.LoadingScreen;
+import rayengine.AssetManager;
 import rayengine.Game;
+import rayengine.core.Core;
+import rayengine.core.Settings;
+import rayengine.core.Vector2;
+import rayengine.rendercontexts.RaylibRenderContext;
 
 
 public final class GUM extends Game {
@@ -9,20 +13,26 @@ public final class GUM extends Game {
   private GUM() {
     super("G.U.M. (Galactic Unemployed Mercenaries)");
 
-    this.addScene(new MainMenu(this));
-    this.addScene(new Lobby(this));
-    this.setActiveScene(this.getScene("Main Menu"));
+    this.addScene(new LoadingScreen(this));
+    this.setActiveScene(this.getScene("Loading Screen"));
   }
 
   public static void launch() {
-    Game.initialize("G.U.M. (Galactic Unemployed Mercenaries)");
-    Game.loadAssets(
-      "assets", 
-      "assets/models/.*\\.png", "assets/models/.*\\.mtl"
+    Core.initialize(
+      new Settings(
+        "G.U.M. (Galactic Unemployed Mercenaries)",
+        new Vector2(1200, 800),
+        60,
+        new RaylibRenderContext()
+      )
     );
+
+    AssetManager.loadAssets("preload");
+
+    Core.run(new GUM());
+
+    AssetManager.releaseAll();
     
-    new GUM().run();
-    
-    Game.shutdown();
+    Core.shutdown();
   }
 }

@@ -1,10 +1,11 @@
 package rayengine.components;
 
-import com.raylib.Raylib;
-
 import rayengine.assets.Model;
+import rayengine.core.Color;
 import rayengine.core.Component;
+import rayengine.core.Core;
 import rayengine.core.GameObject;
+import rayengine.core.RenderContext;
 import rayengine.core.Renderable3D;
 
 public final class ModelRenderer extends Component implements Renderable3D {
@@ -25,16 +26,18 @@ public final class ModelRenderer extends Component implements Renderable3D {
 
   @Override
   public void render() {
-    if(!this.isActive() || this.model == null) return;
+    if(this.model == null) return;
+
+    RenderContext ctx = Core.getRenderContext();
     Transform transform = this.getParent().getTransform();
 
-    Raylib.DrawModelEx(
-      this.model.unwrap(),
-      transform.getPosition().unwrap(),
-      transform.getRotation().unwrap(),
+    ctx.render(
+      this.model,
+      transform.getPosition(),
+      transform.getRotation(),
       0.f,
-      transform.getScale().unwrap(),
-      Raylib.GetColor(0xffffffff)
+      transform.getScale(),
+      Color.WHITE
     );
   }
   

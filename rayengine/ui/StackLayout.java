@@ -71,6 +71,7 @@ public final class StackLayout extends Layout {
     float west = this.innerMargins[Margin.WEST.ordinal()];
     float north = this.innerMargins[Margin.NORTH.ordinal()];
     float south = this.innerMargins[Margin.SOUTH.ordinal()];
+    
     for(Widget widget : this.getChildren()) {
       float x, y, w, h;
       if(this.direction == Direction.HORIZONTAL) {

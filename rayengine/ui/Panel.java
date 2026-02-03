@@ -1,8 +1,9 @@
 package rayengine.ui;
 
-import com.raylib.Raylib;
-
 import rayengine.core.Color;
+import rayengine.core.Core;
+import rayengine.core.Rectangle;
+import rayengine.core.RenderContext;
 import rayengine.core.Vector2;
 import rayengine.ui.core.StatelessWidget;
 import rayengine.ui.core.Widget;
@@ -25,10 +26,11 @@ public final class Panel extends StatelessWidget {
 
   @Override
   public void render() {
-    Vector2 position = this.getPosition();
-    Vector2 size = this.getSize();
+    final RenderContext ctx = Core.getRenderContext();
+    final Vector2 position = this.getPosition();
+    final Vector2 size = this.getSize();
 
-    Raylib.DrawRectangleV(position.unwrap(), size.unwrap(), this.color.unwrap());
+    ctx.render(new Rectangle(position, size), color);
   }
 
 }

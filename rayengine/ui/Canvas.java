@@ -1,10 +1,10 @@
 package rayengine.ui;
 
-
-import com.raylib.Raylib;
-
 import rayengine.assets.Texture;
+import rayengine.core.Color;
+import rayengine.core.Core;
 import rayengine.core.Rectangle;
+import rayengine.core.RenderContext;
 import rayengine.core.Vector2;
 import rayengine.ui.core.StatelessWidget;
 import rayengine.ui.core.Widget;
@@ -75,14 +75,14 @@ public final class Canvas extends StatelessWidget {
 
   @Override
   public void render() {
-    float w = this.texture != null ? this.texture.unwrap().width() : 0;
-    float h = this.texture != null ? this.texture.unwrap().height() : 0;
+    final RenderContext ctx = Core.getRenderContext();
+    final Vector2 textureSize = this.texture != null ? this.texture.getSize() : Vector2.ZERO;
     
     final Rectangle source = new Rectangle(
-      w*this.srcPosition.x,
-      h*this.srcPosition.y,
-      w*this.srcSize.x,
-      h*this.srcSize.y
+      textureSize.x * this.srcPosition.x,
+      textureSize.y * this.srcPosition.y,
+      textureSize.x * this.srcSize.x,
+      textureSize.y * this.srcSize.y
     );
 
     
@@ -96,28 +96,25 @@ public final class Canvas extends StatelessWidget {
       dstSize.y
     );
 
-
-    if(this.scissor != null)
-      Raylib.BeginScissorMode(
-        (int)(Raylib.GetRenderWidth()*scissor.x), 
-        (int)(Raylib.GetRenderHeight()*scissor.y), 
-        (int)(Raylib.GetRenderWidth()*scissor.width), 
-        (int)(Raylib.GetRenderHeight()*scissor.height)
-      );
-
-    if(this.texture != null) {
-      Raylib.DrawTexturePro(
-        this.texture.unwrap(),
-        source.unwrap(),
-        dest.unwrap(),
-        Vector2.ZERO.unwrap(),
-        this.rotation,
-        Raylib.GetColor(0xffffffff)
+    if(this.scissor != null) {
+      final Vector2 renderSize = ctx.getRenderSize();
+      
+      ctx.setScissorRectangle(
+        new Rectangle(
+          renderSize.x*scissor.x,
+          renderSize.y*scissor.y,
+          renderSize.x*scissor.width,
+          renderSize.y*scissor.height
+        )
       );
     }
 
+    if(this.texture != null) {
+      ctx.render(texture, source, dest, Vector2.ZERO, rotation, Color.WHITE);
+    }
+
     if(this.scissor != null)
-      Raylib.EndScissorMode();
+      ctx.setScissorRectangle(null);
   }
   
 }

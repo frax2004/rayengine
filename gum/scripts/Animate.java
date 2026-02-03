@@ -22,7 +22,7 @@ public class Animate extends Script {
   }
 
   @Override
-  protected void OnUpdate(float deltaTime) {
+  public void update(float deltaTime) {
     x += deltaTime;
     theta += deltaTime;
     this.canvas.setSourcePosition(new Vector2((x*rate)/Raylib.GetRenderWidth(), 0));

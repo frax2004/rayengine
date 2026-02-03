@@ -1,7 +1,5 @@
 package rayengine.ui;
 
-import static rayengine.utility.Console.println;
-
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -10,14 +8,15 @@ import com.raylib.Raylib;
 import rayengine.assets.Font;
 import rayengine.assets.Texture;
 import rayengine.core.Color;
+import rayengine.core.Core;
 import rayengine.core.Rectangle;
+import rayengine.core.RenderContext;
 import rayengine.core.Vector2;
 import rayengine.ui.core.StatefullWidget;
 import rayengine.ui.core.Widget;
 
 public final class Button extends StatefullWidget {
-
-  private Texture texture = null;
+  private Texture texture;
   private Color color;
   private Color foreground;
   private String text;
@@ -154,13 +153,7 @@ public final class Button extends StatefullWidget {
     if(Raylib.IsMouseButtonReleased(Raylib.MOUSE_BUTTON_BACK))
       this.onMouseButtonReleased.accept(this, Raylib.MOUSE_BUTTON_BACK);
 
-    Rectangle rect = new Rectangle(
-      this.getPosition().x,
-      this.getPosition().y,
-      this.getSize().x,
-      this.getSize().y
-    );
-
+    final Rectangle rect = new Rectangle(this.getPosition(), this.getSize());
 
     boolean hover = Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), rect.unwrap());
     if(hover && !isHovering) this.onHoverEnter.accept(this);
@@ -187,16 +180,16 @@ public final class Button extends StatefullWidget {
     this.onHover.accept(this);
   }
 
-  private static float getFitFontSize(Raylib.Font font, String text, float maxWidth, float maxHeight) {
+  private static float getFitFontSize(RenderContext ctx, Font font, String text, float maxWidth, float maxHeight) {
     if (text == null || text.isEmpty()) return 10.0f;
 
-    float referenceFontSize = 100.0f;
-    float spacing = referenceFontSize / 10.0f;
+    final float referenceFontSize = 100.0f;
+    final float spacing = referenceFontSize / 10.0f;
     
-    Raylib.Vector2 textSize = Raylib.MeasureTextEx(font, text, referenceFontSize, spacing);
+    final Vector2 textSize = ctx.getTextSize(font, text, referenceFontSize, spacing);
 
-    float scaleX = maxWidth / textSize.x();
-    float scaleY = maxHeight / textSize.y();
+    final float scaleX = maxWidth / textSize.x;
+    final float scaleY = maxHeight / textSize.y;
 
     float scale = Math.min(scaleX, scaleY);
 
@@ -205,49 +198,31 @@ public final class Button extends StatefullWidget {
 
   @Override
   public void render() {
-    Raylib.Rectangle dest = new Rectangle(
-      this.getPosition().x,
-      this.getPosition().y,
-      this.getSize().x,
-      this.getSize().y
-    ).unwrap();
+    final RenderContext ctx = Core.getRenderContext();
+    
+    final Rectangle dest = new Rectangle(this.getPosition(), this.getSize());
 
     if(this.texture != null) {
-      Raylib.Texture handle = this.texture.unwrap();
-      Raylib.DrawTexturePro(
-        handle,
-        new Rectangle(
-          0, 
-          0, 
-          handle.width(),
-          handle.height()
-        ).unwrap(), 
-        dest,
-        Vector2.ZERO.unwrap(),
-        0.f,
-        Raylib.GetColor(0xffffffff)
-      );
-    } else Raylib.DrawRectangleRec(dest, this.color.unwrap());
-
-    final Raylib.Font font = this.font != null ? this.font.unwrap() : Raylib.GetFontDefault();
-    final float fontSize = Button.getFitFontSize(font, text, dest.width(), dest.height())*fontScale;
-    final float spacing =  fontSize/10.f;
-    final Raylib.Vector2 textSize = Raylib.MeasureTextEx(font, text, fontSize, spacing);
-    final Raylib.Vector2 textPosition = new Vector2(
-      dest.x() + 0.5f*(dest.width() - textSize.x()),
-      dest.y() + 0.5f*(dest.height() - textSize.y())
-    ).unwrap();
+      Rectangle source = new Rectangle(Vector2.ZERO, this.texture.getSize());
     
+      ctx.render(this.texture, source, dest, Vector2.ZERO, 0.f, Color.WHITE);
+    
+    } else ctx.render(dest, this.color);
 
-    println("%s", this.foreground);
-    Raylib.DrawTextEx(
-      font,
-      text,
-      textPosition,
-      fontSize,
-      spacing,
-      this.foreground.unwrap()
+    final Font font = this.font != null ? this.font : Font.getDefault();
+
+    final float fontSize = Button.getFitFontSize(ctx, font, this.text, dest.width, dest.height)*this.fontScale;
+    
+    final float spacing =  fontSize/10.f;
+    
+    final Vector2 textSize = ctx.getTextSize(font, this.text, fontSize, spacing);
+    
+    final Vector2 textPosition = new Vector2(
+      dest.x + 0.5f*(dest.width - textSize.x),
+      dest.y + 0.5f*(dest.height - textSize.y)
     );
+    
+    ctx.render(font, this.text, textPosition, fontSize, spacing, this.foreground);
   }
   
 }

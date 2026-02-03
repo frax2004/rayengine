@@ -5,7 +5,7 @@ import java.util.List;
 
 import rayengine.components.Transform;
 
-public class GameObject implements Updatable {
+public final class GameObject implements Updatable, Renderable {
   private List<Component> components;
   private Scene parentScene;
   private Transform transform;
@@ -82,11 +82,21 @@ public class GameObject implements Updatable {
 
   @Override 
   public final void update() {
-    if(!this.active) return;
     for(Component component : this.components) {
       if(component instanceof Updatable updatable && component.isActive()) {
         updatable.update();
       }
     }
   }
+
+  @Override
+  public final void render() {
+    
+    for(Component component : this.getComponents()) {
+      if(component instanceof Renderable renderable && component.isActive())
+        renderable.render();
+    }
+
+  }
+
 }

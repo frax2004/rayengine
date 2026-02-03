@@ -12,12 +12,14 @@ public abstract class Script extends Component implements Updatable {
     super(parent);
   }
 
-  protected abstract void OnUpdate(float deltaTime);
+  public void start() {}
+  public void awake() {}
+  public void update(float deltaTime) {}
 
   @Override
-  public void update() {
+  public final void update() {
     if(!this.isActive()) return;
-    this.OnUpdate(Raylib.GetFrameTime());
+    this.update(Raylib.GetFrameTime());
   }
   
 }

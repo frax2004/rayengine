@@ -1,8 +1,8 @@
 package rayengine.components;
 
-import com.raylib.Raylib;
 
 import rayengine.core.Component;
+import rayengine.core.Core;
 import rayengine.core.GameObject;
 import rayengine.core.Renderable2D;
 import rayengine.core.Updatable;
@@ -29,10 +29,10 @@ public final class UI extends Component implements Updatable, Renderable2D {
 
   @Override
   public void update() {
-    if(!isActive()) return;
+    if(!this.isActive()) return;
     if(this.root != null) {
       this.root.setPosition(Vector2.ZERO.copy());
-      this.root.setSize(new Vector2(Raylib.GetRenderWidth(), Raylib.GetRenderHeight()));
+      this.root.setSize(Core.getRenderContext().getRenderSize());
 
       if(this.root instanceof StatefullWidget widget)
         widget.update();

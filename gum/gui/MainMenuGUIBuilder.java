@@ -26,7 +26,7 @@ public class MainMenuGUIBuilder implements Builder<UI> {
   @Override
   public UI build() {
     
-    Texture texture = AssetManager.get(Texture.class, "assets/textures/titlescreen.png");
+    Texture texture = AssetManager.get(Texture.class, "preload/titlescreen.png");
     Texture btn = AssetManager.get(Texture.class, "assets/textures/button.png");
     Font font = AssetManager.get(Font.class, "assets/fonts/impact.ttf");
 

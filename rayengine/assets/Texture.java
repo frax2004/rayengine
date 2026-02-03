@@ -3,9 +3,10 @@ package rayengine.assets;
 import com.raylib.Raylib;
 
 import rayengine.core.Asset;
+import rayengine.core.Vector2;
 
-public class Texture implements Asset<Raylib.Texture> {
-  private Raylib.Texture texture = null;
+public final class Texture implements Asset<Raylib.Texture> {
+  private final Raylib.Texture texture;
 
   public Texture(String path) {
     this.texture = Raylib.LoadTexture(path);
@@ -24,7 +25,11 @@ public class Texture implements Asset<Raylib.Texture> {
   @Override
   public void release() {
     Raylib.UnloadTexture(this.texture);
-    this.texture = null;
   }
-  
+
+  public Vector2 getSize() {
+    return this.texture != null ? 
+      new Vector2(this.texture.width(), this.texture.height()) : Vector2.ZERO.copy();
+  }
+
 }

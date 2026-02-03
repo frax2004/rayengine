@@ -20,6 +20,7 @@ public final class Vector3 {
     this.y = y;
     this.z = z;
   }
+  
   public Vector3(Raylib.Vector3 other) {
     this.x = other.x();
     this.y = other.y();

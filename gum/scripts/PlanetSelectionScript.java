@@ -14,8 +14,8 @@ public final class PlanetSelectionScript extends Script {
   }
 
   @Override
-  protected void OnUpdate(float deltaTime) {
-
+  public void update(float deltaTime) {
+    
   }
   
 }

@@ -5,7 +5,7 @@ import com.raylib.Raylib;
 import rayengine.core.Asset;
 
 public final class Music implements Asset<Raylib.Music> {
-  private Raylib.Music music = null;
+  private final Raylib.Music music;
   
   public Music(String path) {
     this.music = Raylib.LoadMusicStream(path);
@@ -14,7 +14,6 @@ public final class Music implements Asset<Raylib.Music> {
   @Override
   public void release() {
     Raylib.UnloadMusicStream(this.music);
-    this.music = null;
   }
 
   @Override
